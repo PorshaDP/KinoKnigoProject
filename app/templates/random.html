@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рандомайзер</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Подключите ваш CSS файл -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Рандомайзер</h1>
+            <nav>
+                <a href="/main">Главная</a>
+                <a href="/books">Книги</a>
+                <a href="/movies">Фильмы</a>
+                <a href="/horoscope">Гороскоп</a>
+                <a href="/profile">Профиль</a>
+            </nav>
+        </header>
+        <main>
+            <h2>Случайные рекомендации</h2>
+            <div class="random-content">
+                <div class="recommendation">
+                    <h3>Случайная книга:</h3>
+                    <p>Название: <strong>{{ book.title }}</strong></p>
+                </div>
+                <div class="recommendation">
+                    <h3>Случайный фильм:</h3>
+                    <p>Название: <strong>{{ movie.title }}</strong></p>
+                </div>
+            </div>
+            <button onclick="location.reload()">Сгенерировать снова</button>
+        </main>
+        <footer>
+            <p>&copy; 2024 Ваш сайт рандомайзера</p>
+        </footer>
+    </div>
+</body>
+</html>

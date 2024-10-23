@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лента книг</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Подключение CSS, если потребуется -->
+</head>
+<body>
+    <header>
+        <h1>Лента книг</h1>
+        <nav>
+            <a href="/">Главная</a> |
+            <a href="/profile">Профиль</a> |
+            <a href="/movies">Лента фильмов</a> |
+            <a href="/random">Рандомайзер</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <ul>
+                <!-- Здесь выводятся книги, переданные в шаблон -->
+                {% for book in books %}
+                    <li>
+                        <h2>{{ book.title }}</h2>
+                        <p>{{ book.description }}</p>
+                        <a href="/books/{{ book.id }}">Подробнее</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Книжный и Кино сайт</p>
+    </footer>
+</body>
+</html>
