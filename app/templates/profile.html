@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя</title>
+    <title>Profile</title>
 </head>
 <body>
-    <h1>Профиль {{ user.name }}</h1>
-    <p>Email: {{ user.email }}</p>
-    <img src="{{ user.avatar }}" alt="Avatar" />
+        <h1>Добро пожаловать, {{ user.name }}</h1>
+        <p>Email: {{ user.email }}</p>
+        {% if user.photo_path %}
+            <img src="{{ user.photo_path }}" alt="Profile Photo" style="max-width: 200px;">
+        {% else %}
+            <p>Никто не знает, как Вы выглядете.</p>
+        {% endif %}
+        <form action="/upload_photo" method="post" enctype="multipart/form-data">
+            <label for="file">Загрузите свое фото:</label>
+            <input type="file" id="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+
 </body>
 </html>
