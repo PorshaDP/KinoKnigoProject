@@ -8,7 +8,7 @@ from app.models import Base, User, SessionLocal, engine, create_user, get_user_b
 from datetime import datetime, timedelta
 import jwt
 import os
-from app.learning import new_model
+from app.learning import new_model, new_model_for_books
 from pydantic import BaseModel
 
 
@@ -154,6 +154,26 @@ async def train_model():
 @app.post("/recommend_movies")
 async def recommend_movies(request: MovieRequest):
     recommendations = new_model.recommend_movies(request.title, request.num_recommendations)
+    if "error" in recommendations:
+        raise HTTPException(status_code=404, detail=recommendations["error"])
+    return recommendations
+
+class BookRequest(BaseModel):
+    title: str  # Название книги
+    num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
+
+# Эндпоинт для обучения модели
+@app.post("/train_model_books")
+async def train_model():
+    result = new_model_for_books.train_model()
+    if 'error' in result:
+        raise HTTPException(status_code=400, detail=result['error'])
+    return result
+
+# Эндпоинт для получения рекомендаций
+@app.post("/recommend_books")
+async def recommend_books(request: BookRequest):
+    recommendations = new_model_for_books.recommend_books(request.title, request.num_recommendations)
     if "error" in recommendations:
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
