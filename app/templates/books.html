@@ -1,49 +1,10 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="en">
-=======
 <html lang="ru">
 
->>>>>>> master_local
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лента книг</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Подключение CSS, если потребуется -->
-</head>
-<body>
-    <header>
-        <h1>Лента книг</h1>
-        <nav>
-            <a href="/">Главная</a> |
-            <a href="/profile">Профиль</a> |
-            <a href="/movies">Лента фильмов</a> |
-            <a href="/random">Рандомайзер</a>
-        </nav>
-    </header>
-
-    <main>
-        <section>
-            <ul>
-                <!-- Здесь выводятся книги, переданные в шаблон -->
-                {% for book in books %}
-                    <li>
-                        <h2>{{ book.title }}</h2>
-                        <p>{{ book.description }}</p>
-                        <a href="/books/{{ book.id }}">Подробнее</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Книжный и Кино сайт</p>
-    </footer>
-</body>
-</html>
-=======
     <link rel="stylesheet" href="/static/styles/style-books.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -184,4 +145,3 @@
 </body>
 
 </html>
->>>>>>> master_local
