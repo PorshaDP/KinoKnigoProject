@@ -3,37 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лента книг</title>
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Подключение CSS, если потребуется -->
+    <title>Рекомендации по книгам</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <header>
-        <h1>Лента книг</h1>
+        <h1>Рекомендации по книгам</h1>
         <nav>
             <a href="/">Главная</a> |
             <a href="/profile">Профиль</a> |
-            <a href="/movies">Лента фильмов</a> |
-            <a href="/random">Рандомайзер</a>
+            <a href="/movies">Лента фильмов</a>
         </nav>
     </header>
 
     <main>
         <section>
-            <ul>
-                <!-- Здесь выводятся книги, переданные в шаблон -->
-                {% for book in books %}
-                    <li>
-                        <h2>{{ book.title }}</h2>
-                        <p>{{ book.description }}</p>
-                        <a href="/books/{{ book.id }}">Подробнее</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            <h2>Рекомендации по книгам</h2>
+            <form id="recommendation-form">
+                <label for="book-title">Введите название книги:</label>
+                <input type="text" id="book-title" name="title" placeholder="Название книги" required>
+                <button type="submit">Получить рекомендации</button>
+            </form>
+
+            <div id="recommendations">
+                <h3>Рекомендованные книги:</h3>
+                <ul id="recommendation-list">
+                    <!-- Список книг будет добавляться здесь -->
+                </ul>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Книжный и Кино сайт</p>
+        <p>&copy; Мы еще и книги!</p>
     </footer>
+
+    <script>
+        document.getElementById("recommendation-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Останавливаем отправку формы
+
+            const title = document.getElementById("book-title").value;
+
+            try {
+                const response = await fetch("/recommend_books", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ title: title, num_recommendations: 5 })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Ошибка получения рекомендаций");
+                }
+
+                const recommendations = await response.json();
+
+                // Очищаем старые рекомендации
+                const recommendationList = document.getElementById("recommendation-list");
+                recommendationList.innerHTML = "";
+
+                // Добавляем новые рекомендации
+                recommendations.forEach(book => {
+                    const li = document.createElement("li");
+                    const img = document.createElement("img");
+                    const description = document.createElement("div");
+
+                    // Устанавливаем источник изображения (thumbnail)
+                    img.src = book.thumbnail || "/static/default-book.png";
+                    img.alt = book.title;
+                    img.onerror = function() {
+                        this.src = "/static/default-book.png"; // Путь по умолчанию для изображения, если оно не найдено
+                    };
+
+                    // Добавляем описание книги
+                    description.innerHTML = `<strong>${book.title}</strong> - ${book.description || "Описание отсутствует"}`;
+
+                    // Добавляем элементы в список
+                    li.appendChild(img);
+                    li.appendChild(description);
+                    recommendationList.appendChild(li);
+                });
+            } catch (error) {
+                alert("Ошибка: " + error.message);
+            }
+        });
+    </script>
 </body>
 </html>
