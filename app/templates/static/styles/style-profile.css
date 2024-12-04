@@ -1,0 +1,125 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    font-family:'Courier New', Courier, monospace;
+
+}
+
+html{
+    font-size: 62%;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(0deg, #dad9d8 0%, #d6d4ca 100%);
+    color: black;
+}
+.logo{
+    font-size: 3rem;
+    color: burlywood;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.logo:hover{
+    transform: scale(1.1); 
+}
+header{
+    margin-top: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 9%;
+    background-color: transparent;
+    filter: drop-shadow(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    
+}
+
+nav a{
+    font-size: 1.8rem;
+    color: #d6d4ca;
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+    border-color: 3px solid transparent;
+}
+nav a:hover,
+nav a.active{
+    color: blue;
+    border-bottom: 3px solid #110864;
+}
+@media(max-width:995px){
+    nav{
+        position: absolute;
+        top:100%;
+        right: 0;
+        width: 40%;
+        border-left: 3px solid #103b99;
+        border-bottom: 3px solid #2771c7;
+        border-bottom-left-radius: 2rem;
+        padding: 1rem solid;
+        background-color: #5c3815;
+    }
+
+    nav.active{
+        display: block;
+    }
+    nav a{
+        display: block;
+        font-size: 2rem;
+        margin: 3rem 0;
+    }
+
+    nav a:hover,
+    nav a.active{
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-bottom: 0.5rem;
+    }
+}
+
+section{
+    min-height: 100vh;
+    padding: 10rem 9% 5rem;
+}
+.home{
+    display: flex;
+    justify-content:flex-start;
+    gap: 8rem;
+    background-color: rgb(255, 172, 172);
+}
+.home .home-content h1{
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+.home-content{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 300;
+}
+span{
+    color: #188043;
+}
+.home-img{
+    border-radius: 50%
+}
+.home-img img{
+    position: relative;
+    width: 20vw;
+    border-radius: 50%;
+    box-shadow: 0 0 25px solid #570653;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
