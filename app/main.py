@@ -11,17 +11,21 @@ import os
 from app.learning import new_model, new_model_for_books
 from pydantic import BaseModel
 
-
+# Настройки приложения
 SECRET_KEY = "a2f6c1b3e8d9f7a2c3d4b5e6f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9g0"
 ALGORITHM = "HS256"
 
 app = FastAPI()
+
+# Настройка путей к шаблонам и статическим файлам
 templates = Jinja2Templates(directory="app/templates")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+# Директория для загрузки файлов
 UPLOAD_DIR = "app/static/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# Инициализация базы данных
 Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -31,6 +35,7 @@ def get_db():
     finally:
         db.close()
 
+# Функция для создания JWT токена
 def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=30)
@@ -38,6 +43,7 @@ def create_access_token(data: dict):
     token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return token
 
+# Функция для проверки токена
 def verify_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -47,14 +53,17 @@ def verify_token(token: str):
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+# Главная страница
 @app.get("/", response_class=HTMLResponse)
 async def auth_menu(request: Request):
     return templates.TemplateResponse("auth_menu.html", {"request": request})
 
+# Главная страница приложения
 @app.get("/main", response_class=HTMLResponse)
 async def main_page(request: Request):
     return templates.TemplateResponse("main_page.html", {"request": request})
 
+# Профиль пользователя
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile(request: Request, access_token: str = Cookie(None)):
     if not access_token:
@@ -71,6 +80,7 @@ async def get_profile(request: Request, access_token: str = Cookie(None)):
         "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
     })
 
+# Загрузка фото профиля
 @app.post("/upload_photo", response_class=HTMLResponse)
 async def upload_photo(
     request: Request,
@@ -101,6 +111,7 @@ async def upload_photo(
         "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
     })
 
+# Регистрация
 @app.get("/register", response_class=HTMLResponse)
 async def register_form(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
@@ -117,6 +128,7 @@ async def register_user(request: Request, name: str = Form(...), email: str = Fo
     create_user(db, name=name, email=email, password=hashed_password)
     return RedirectResponse("/main", status_code=302)
 
+# Авторизация
 @app.get("/login", response_class=HTMLResponse)
 async def login_form(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
@@ -137,20 +149,12 @@ async def login_user(
     response.set_cookie(key="access_token", value=access_token, httponly=True)
     return response
 
-# Модель запроса для получения рекомендаций
+# Модель запроса для фильмов
 class MovieRequest(BaseModel):
     title: str
     num_recommendations: int = 5
 
-# Эндпоинт для обучения модели
-@app.post("/train_model")
-async def train_model():
-    result = new_model.train_model()
-    if 'error' in result:
-        raise HTTPException(status_code=400, detail=result['error'])
-    return result
-
-# Эндпоинт для получения рекомендаций
+# Рекомендации фильмов
 @app.post("/recommend_movies")
 async def recommend_movies(request: MovieRequest):
     recommendations = new_model.recommend_movies(request.title, request.num_recommendations)
@@ -158,22 +162,20 @@ async def recommend_movies(request: MovieRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+# Модель запроса для книг
 class BookRequest(BaseModel):
-    title: str  # Название книги
-    num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
+    title: str
+    num_recommendations: int = 10
 
-# Эндпоинт для обучения модели
-@app.post("/train_model_books")
-async def train_model():
-    result = new_model_for_books.train_model()
-    if 'error' in result:
-        raise HTTPException(status_code=400, detail=result['error'])
-    return result
-
-# Эндпоинт для получения рекомендаций
+# Рекомендации книг
 @app.post("/recommend_books")
 async def recommend_books(request: BookRequest):
     recommendations = new_model_for_books.recommend_books(request.title, request.num_recommendations)
     if "error" in recommendations:
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
+
+# Страница книг
+@app.get("/books", response_class=HTMLResponse)
+async def get_books_page(request: Request):
+    return templates.TemplateResponse("books.html", {"request": request})
