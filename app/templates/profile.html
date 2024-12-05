@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -9,64 +9,52 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <a href = "#" class = "logo"> Дима</a>
-
+    <header class="d-flex justify-content-between align-items-center p-3 bg-light">
+        <a href="#" class="logo">Дима</a>
         <nav>
-            <a href = "#" class = "active"> Профиль пользователя</a>
-            <a href = "#"> Главная</a>
-            <a href = "#"> Смотреть</a>
-            <a href = "#"> Читать</a>
-            <a href = "#"> Мне повезет</a>
-            <a href = "#"> Гороскоп</a>
+            <a href="#" class="active">Профиль пользователя</a>
+            <a href="#">Главная</a>
+            <a href="#">Смотреть</a>
+            <a href="#">Читать</a>
+            <a href="#">Мне повезет</a>
+            <a href="#">Гороскоп</a>
         </nav>
     </header>
-    <section class="home">
+
+    <section class="home d-flex align-items-center p-4">
         <div class="home-img">
-            <img src = "static/images/profile.jfif" alt = "">
+            {% if user.photo_path %}
+                <img src="{{ user.photo_path }}" alt="Фото профиля" class="rounded" style="max-width: 200px;">
+            {% else %}
+                <img src="static/images/default-profile.png" alt="Нет фото" class="rounded" style="max-width: 200px;">
+                <p>Никто не знает, как Вы выглядите.</p>
+            {% endif %}
         </div>
-        <div class="home-content">
-            <h1> {{ user.name }}</h1>
+        <div class="home-content ms-4">
+            <h1>{{ user.name }}</h1>
             <p>Email: {{ user.email }}</p>
             <div class="menu-item">
                 <span class="icon">📂</span>
-                <a href = "#"> Коллекция</a>
+                <a href="#">Коллекция</a>
             </div>
             <div class="menu-item">
                 <span class="icon">📅</span>
-                <a href = "#"> В планах</a>
+                <a href="#">В планах</a>
             </div>
             <div class="menu-item">
                 <span class="icon">⚙️</span>
-                <a href = "#"> Настройки</a>
+                <a href="#">Настройки</a>
+            </div>
         </div>
     </section>
-</body>
-</html> -->
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profile</title>
-    <link rel="stylesheet" href="static/styles/style-profile.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
-</head>
-<body>
-        <h1>Добро пожаловать, {{ user.name }}</h1>
-        <p>Email: {{ user.email }}</p>
-        {% if user.photo_path %}
-            <img src="{{ user.photo_path }}" alt="Profile Photo" style="max-width: 200px;">
-        {% else %}
-            <p>Никто не знает, как Вы выглядете.</p>
-        {% endif %}
-        <form action="/upload_photo" method="post" enctype="multipart/form-data">
-            <label for="file">Загрузите свое фото:</label>
-            <input type="file" id="file" name="file">
-            <button type="submit">Upload</button>
+    <section class="upload p-4">
+        <h2>Загрузите своё фото:</h2>
+        <form action="/upload_photo" method="post" enctype="multipart/form-data" class="d-flex flex-column">
+            <label for="file" class="form-label">Выберите файл:</label>
+            <input type="file" id="file" name="file" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Загрузить</button>
         </form>
-
+    </section>
 </body>
 </html>
