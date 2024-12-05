@@ -1,24 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Рекомендации по книгам</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>Лента книг</title>
+    <link rel="stylesheet" href="/static/styles/style-books.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
+
 <body>
+    <div class="hamburger-menu">
+        <input id="menu__toggle" type="checkbox" />
+        <label class="menu__btn" for="menu__toggle">
+            <span></span>
+        </label>
+        <ul class="menu__box">
+            <li><a class="menu__item" href="#">Главная</a></li>
+            <li><a class="menu__item" href="#">Мой профиль</a></li>
+            <li><a class="menu__item" href="#">Смотреть</a></li>
+            <li><a class="menu__item" href="#">Читать</a></li>
+            <li><a class="menu__item" href="#">Мне повезет</a></li>
+            <li><a class="menu__item" href="#">Гороскоп</a></li>
+        </ul>
+    </div>
+
     <header>
-        <h1>Рекомендации по книгам</h1>
-        <nav>
-            <a href="/">Главная</a> |
-            <a href="/profile">Профиль</a> |
-            <a href="/movies">Лента фильмов</a>
-        </nav>
+        <div class="title">
+            <h1>Лента книг</h1>
+        </div>
     </header>
 
     <main>
         <section>
-            <h2>Рекомендации по книгам</h2>
+            <div class="container">
+                <div class="row mt-3">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <img src="static/images/красотка.jfif" class="card-img-top" alt="Красотка">
+                            <div class="card-body">
+                                <h5 class="card-title">Красотка</h5>
+                                <p class="card-text">Финансовый магнат Эдвард Льюис, проезжая по ночному городу...</p>
+                                <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Добавьте остальные карточки по тому же шаблону -->
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Рекомендации</h2>
             <form id="recommendation-form">
                 <label for="book-title">Введите название книги:</label>
                 <input type="text" id="book-title" name="title" placeholder="Название книги" required>
@@ -35,53 +69,31 @@
     </main>
 
     <footer>
-        <p>&copy; Мы еще и книги!</p>
+        <p>&copy; 2024 Книжный и Кино сайт</p>
     </footer>
 
     <script>
-        document.getElementById("recommendation-form").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Останавливаем отправку формы
+        document.getElementById("recommendation-form").addEventListener("submit", async function (event) {
+            event.preventDefault();
 
             const title = document.getElementById("book-title").value;
 
             try {
                 const response = await fetch("/recommend_books", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ title: title, num_recommendations: 5 })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ title: title })
                 });
 
-                if (!response.ok) {
-                    throw new Error("Ошибка получения рекомендаций");
-                }
+                if (!response.ok) throw new Error("Ошибка получения рекомендаций");
 
                 const recommendations = await response.json();
 
-                // Очищаем старые рекомендации
                 const recommendationList = document.getElementById("recommendation-list");
                 recommendationList.innerHTML = "";
-
-                // Добавляем новые рекомендации
                 recommendations.forEach(book => {
                     const li = document.createElement("li");
-                    const img = document.createElement("img");
-                    const description = document.createElement("div");
-
-                    // Устанавливаем источник изображения (thumbnail)
-                    img.src = book.thumbnail || "/static/default-book.png";
-                    img.alt = book.title;
-                    img.onerror = function() {
-                        this.src = "/static/default-book.png"; // Путь по умолчанию для изображения, если оно не найдено
-                    };
-
-                    // Добавляем описание книги
-                    description.innerHTML = `<strong>${book.title}</strong> - ${book.description || "Описание отсутствует"}`;
-
-                    // Добавляем элементы в список
-                    li.appendChild(img);
-                    li.appendChild(description);
+                    li.textContent = book.title || "Без названия";
                     recommendationList.appendChild(li);
                 });
             } catch (error) {
@@ -90,4 +102,5 @@
         });
     </script>
 </body>
+
 </html>

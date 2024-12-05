@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url('/static/images/логин1.jpg') ;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #f1f1f1;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+nav ul {
+    list-style-type: none;
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 30px rgba(35, 189, 209, 0.37);
+    border: 1.5px solid rgba(25, 145, 214, 0.18);
+    display: flex;
+    margin-left: 5rem;
+    margin-right: 6rem;
+}
+
+nav ul li {
+    margin: 1rem 0;
+}
+
+nav ul li a {
+    font-size: 1.5rem;
+    color: #f1f1f1;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #30aafc;
+}
+
+footer {
+    position: fixed;
+    bottom: 1rem;
+    width: 100%;
+    text-align: center;
+    color: #f1f1f1;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+}

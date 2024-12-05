@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    display: flex;
+    /* Устанавливаем флекс-контейнер */
+    flex-direction: column;
+    /* Делаем элементы вертикальными */
+    height: 100vh;
+    /* Высота экрана */
+}
+
+.head_main {
+    background-image: url("../images/fon.png");
+    background-repeat:no-repeat;
+    background-size: contain;
+    /* Изображение полностью умещается в элементе */
+    background-position: left;
+    flex: 10;
+    /* Первая часть занимает 10 долей */
+    background-color: hsl(234, 234, 234);
+
+}
+
+.text_auth {
+    text-align: right;
+    margin-right: 20rem;
+    margin-top: 15rem;
+}
+
+.part2 {
+    flex: 2;
+    /* Вторая часть занимает 2 доли */
+    background-color: rgb(249, 245, 232);
+    background-image: url("../images/логотип.png");
+    background-repeat: no-repeat;
+    background-size: 8rem;
+    /* Задаём размер изображения */
+    background-position: 4rem center;
+    /* Добавляем отступ 4rem слева и центрируем вертикально */
+}
