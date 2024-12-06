@@ -14,7 +14,7 @@ body {
     background-color:rgb(226, 199, 188);
 }
 body::before {
-    background-color: rgb(226, 199, 188) ;
+    background-color:rgb(226, 199, 188);
     content: "";
     position: absolute;
     width: 100%;
@@ -27,7 +27,8 @@ body::before {
     z-index: -1;
 }
 .wrapper {
-    width: 400px;
+    width: 600px;
+    height: 500px;
     border-radius: 15px;
     padding: 40px;
     text-align: center;
@@ -46,7 +47,7 @@ form {
     flex-direction: column;
 }
 h2 {
-    font-size: 2.2rem;
+    font-size: 3rem;
     margin-bottom: 25px;
     color: #ffffff;
     letter-spacing: 1px;
@@ -74,6 +75,7 @@ button {
 }
 button:hover {
     color: #416add;
+    border-radius: 25px;
     background: rgba(62, 87, 170, 0.377);
     border-color: #ffffff;
 }
@@ -95,7 +97,7 @@ button:hover {
     left: 0;
     transform: translateY(-50%);
     color: #077aaf;
-    font-size: 16px;
+    font-size: 25px;
     pointer-events: none;
     transition: 0.3s ease;
 }
