@@ -10,6 +10,8 @@ import jwt
 import os
 from app.learning import new_model, new_model_for_books
 from pydantic import BaseModel
+from app.models import get_random_book, get_random_movie
+
 
 # Настройки приложения
 SECRET_KEY = "a2f6c1b3e8d9f7a2c3d4b5e6f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9g0"
@@ -63,7 +65,6 @@ async def auth_menu(request: Request):
 async def main_page(request: Request):
     return templates.TemplateResponse("main_page.html", {"request": request})
 
-# Профиль пользователя
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile(request: Request, access_token: str = Cookie(None)):
     if not access_token:
@@ -80,13 +81,41 @@ async def get_profile(request: Request, access_token: str = Cookie(None)):
         "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
     })
 
-# Загрузка фото профиля
 @app.post("/upload_photo", response_class=HTMLResponse)
 async def upload_photo(
     request: Request,
     access_token: str = Cookie(None),
-    file: UploadFile = File(...)
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
 ):
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
+    
+
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=500, detail="Ошибка сохранения файла")
+
+    user.photo_path = f"/static/uploads/{file.filename}"
+    db.add(user)
+    db.commit()
+
+    return templates.TemplateResponse("profile.html", {
+        "request": request,
+        "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
+    })
+
+@app.post("/delete_photo", response_class=HTMLResponse)
+async def delete_photo(request: Request, access_token: str = Cookie(None)):
     if not access_token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     
@@ -96,21 +125,19 @@ async def upload_photo(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Сохранение файла
-    file_path = os.path.join(UPLOAD_DIR, file.filename)
-    with open(file_path, "wb") as f:
-        f.write(await file.read())
-    
-    # Обновление записи пользователя
-    user.photo_path = f"/static/uploads/{file.filename}"
+    # Удаление файла, если он существует
+    if user.photo_path and os.path.exists(user.photo_path[1:]):
+        os.remove(user.photo_path[1:])
+
+    # Сброс значения photo_path в базе данных
+    user.photo_path = None
     db.add(user)
     db.commit()
-    
+
     return templates.TemplateResponse("profile.html", {
         "request": request,
-        "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
+        "user": {"name": user.name, "email": user.email, "photo_path": None}
     })
-
 # Регистрация
 @app.get("/register", response_class=HTMLResponse)
 async def register_form(request: Request):
@@ -162,6 +189,10 @@ async def recommend_movies(request: MovieRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+@app.get("/movies", response_class=HTMLResponse)
+async def get_movie(request: Request):
+    return templates.TemplateResponse("movie.html", {"request": request})
+
 # Модель запроса для книг
 class BookRequest(BaseModel):
     title: str
@@ -179,3 +210,17 @@ async def recommend_books(request: BookRequest):
 @app.get("/books", response_class=HTMLResponse)
 async def get_books_page(request: Request):
     return templates.TemplateResponse("books.html", {"request": request})
+
+
+
+@app.get("/random", response_class=HTMLResponse)
+async def randomizer(request: Request):
+
+    random_book = get_random_book()
+    random_movie = get_random_movie()
+
+    return templates.TemplateResponse("random.html", {
+        "request": request,
+        "book": random_book,
+        "movie": random_movie,
+    })
