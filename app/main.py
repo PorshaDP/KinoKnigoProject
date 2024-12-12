@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.models import Base, User, SessionLocal, engine, create_user, get_user_by_email, hash_password, verify_password
 from datetime import datetime, timedelta
 import jwt
-from app.learning import new_model
+from app.learning import new_model, translated_model_for_movies, translated_model_for_books
 from pydantic import BaseModel
 
 SECRET_KEY = "a2f6c1b3e8d9f7a2c3d4b5e6f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9g0"
@@ -113,9 +113,9 @@ class MovieRequest(BaseModel):
     num_recommendations: int = 5
 
 # Эндпоинт для обучения модели
-@app.post("/train_model")
+@app.post("/train_model_movies")
 async def train_model():
-    result = new_model.train_model()
+    result = translated_model_for_movies.train_model()
     if 'error' in result:
         raise HTTPException(status_code=400, detail=result['error'])
     return result
@@ -123,7 +123,27 @@ async def train_model():
 # Эндпоинт для получения рекомендаций
 @app.post("/recommend_movies")
 async def recommend_movies(request: MovieRequest):
-    recommendations = new_model.recommend_movies(request.title, request.num_recommendations)
+    recommendations = translated_model_for_movies.recommend_movies(request.title, request.num_recommendations)
+    if "error" in recommendations:
+        raise HTTPException(status_code=404, detail=recommendations["error"])
+    return recommendations
+
+class BookRequest(BaseModel):
+    title: str  # Название книги
+    num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
+
+# Эндпоинт для обучения модели
+@app.post("/train_model_books")
+async def train_model():
+    result = translated_model_for_books.train_model()
+    if 'error' in result:
+        raise HTTPException(status_code=400, detail=result['error'])
+    return result
+
+# Эндпоинт для получения рекомендаций
+@app.post("/recommend_books")
+async def recommend_books(request: BookRequest):
+    recommendations = translated_model_for_books.recommend_books(request.title, request.num_recommendations)
     if "error" in recommendations:
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
