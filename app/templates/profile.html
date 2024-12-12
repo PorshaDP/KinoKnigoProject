@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя</title>
+    <title>Профиль</title>
+    <link rel="stylesheet" href="/static/styles/style-profile.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Профиль {{ user.name }}</h1>
-    <p>Email: {{ user.email }}</p>
-    <img src="{{ user.avatar }}" alt="Avatar" />
+    <header class="d-flex justify-content-between align-items-center p-3 bg-light">
+        <a href="#" class="logo">{{ user.name }}</a>
+        <nav>
+            <ul>
+                <li><a href="/books">Лента книг</a></li>
+                <li><a href="/movies">Лента фильмов</a></li>
+                <li><a href="/random">Рандомайзер книг и фильмов</a></li>
+                <li><a href="/main">Главная страница</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="home d-flex align-items-center p-4">
+        <div class="home-img">
+            {% if user.photo_path %}
+                <img src="{{ user.photo_path }}" alt="Фото профиля" class="rounded" style="max-width: 200px;">
+                <form action="/delete_photo" method="post" class="mt-2">
+                    <button type="submit" class="btn btn-danger">Удалить фото</button>
+                </form>
+            {% else %}
+                <img src="/static/default-profile.png" alt="Нет фото" class="rounded" style="max-width: 200px;">
+                <p>Никто не знает, как Вы выглядите.</p>
+            {% endif %}
+        </div>
+        <div class="home-content ms-4">
+            <h1>{{ user.name }}</h1>
+            <p>Email: {{ user.email }}</p>
+            <div class="menu-item">
+                <span class="icon">📂</span>
+                <a href="#">Коллекция</a>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📅</span>
+                <a href="#">В планах</a>
+            </div>
+            <div class="menu-item">
+                <span class="icon">⚙️</span>
+                <a href="#">Настройки</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="upload p-4">
+        <h2>Загрузите своё фото:</h2>
+        <form action="/upload_photo" method="post" enctype="multipart/form-data" class="d-flex flex-column">
+            <label for="file" class="form-label">Выберите файл:</label>
+            <input type="file" id="file" name="file" class="form-control mb-2">
+            <button type="submit" class="btn btn-primary">Загрузить</button>
+        </form>
+    </section>
 </body>
 </html>

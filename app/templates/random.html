@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Рандомайзер</title>
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Подключите ваш CSS файл -->
+    <link rel="stylesheet" href="/static/styles-random.css">
 </head>
 <body>
     <div class="container">
@@ -14,22 +14,36 @@
                 <a href="/main">Главная</a>
                 <a href="/books">Книги</a>
                 <a href="/movies">Фильмы</a>
-                <a href="/horoscope">Гороскоп</a>
                 <a href="/profile">Профиль</a>
             </nav>
         </header>
         <main>
             <h2>Случайные рекомендации</h2>
-            <div class="random-content">
-                <div class="recommendation">
-                    <h3>Случайная книга:</h3>
-                    <p>Название: <strong>{{ book.title }}</strong></p>
-                </div>
-                <div class="recommendation">
-                    <h3>Случайный фильм:</h3>
-                    <p>Название: <strong>{{ movie.title }}</strong></p>
-                </div>
+            
+
+            <div class="recommendation">
+                <h3>Случайная книга:</h3>
+                <p><strong>Название:</strong> {{ book.title }}</p>
+                <p><strong>Автор(ы):</strong> {{ book.authors }}</p>
+                <p><strong>Год публикации:</strong> {{ book.published_year }}</p>
+                <p><strong>Категория:</strong> {{ book.categories }}</p>
+                <p><strong>Описание:</strong> {{ book.description }}</p>
+                <p><strong>Рейтинг:</strong> {{ book.average_rating }}</p>
+                <p><strong>Количество страниц:</strong> {{ book.num_pages }}</p>
+                {% if book.thumbnail %}
+                <img src="{{ book.thumbnail }}" alt="Обложка книги">
+                {% endif %}
             </div>
+
+            <div class="recommendation">
+                <h3>Случайный фильм:</h3>
+                <p><strong>Название:</strong> {{ movie.title }}</p>
+                <p><strong>Жанр:</strong> {{ movie.genre }}</p>
+                <p><strong>Год выпуска:</strong> {{ movie.year }}</p>
+                <p><strong>Рейтинг:</strong> {{ movie.score }}</p>
+                <p><strong>Описание:</strong> {{ movie.description }}</p>
+            </div>
+
             <button onclick="location.reload()">Сгенерировать снова</button>
         </main>
         <footer>

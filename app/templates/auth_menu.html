@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация или Регистрация</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="static/styles/style-auth_menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<body>
-    <header>
-        <h1>Добро пожаловать</h1>
-    </header>
 
-    <main>
-        <section>
-            <h2>Выберите действие:</h2>
-            <nav>
-                <a href="/login">Войти</a> | 
-                <a href="/register">Зарегистрироваться</a>
-            </nav>
-        </section>
-    </main>
+<body>
+    <div class="head_main">
+        <div class="text_auth">
+            <header>
+                <h1>Добро пожаловать</h1>
+            </header>
+
+            <main>
+                <section>
+                    <h2>Выберите действие:</h2>
+                    <nav>
+                        <a href="/login" class="btn btn-outline-secondary" style="text-decoration: none;">Войти</a>
+                        <a href="/register" class="btn btn-outline-secondary"
+                            style="text-decoration: none;">Зарегистрироваться</a>
+                    </nav>
+                </section>
+            </main>
+        </div>
+
+    </div>
+    <div class="part2">
+    </div>
 
 
 </body>
+
 </html>
