@@ -6,7 +6,7 @@ from starlette.requests import Request
 from sqlalchemy.orm import Session
 from app.models import Base, User, SessionLocal, engine, create_user, get_user_by_email, get_user_by_name, hash_password, verify_password
 from datetime import datetime, timedelta
-import jwt
+import jwt, os
 
 from app.learning import new_model, translated_model_for_movies, translated_model_for_books
 
