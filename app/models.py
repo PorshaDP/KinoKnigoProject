@@ -48,7 +48,7 @@ def get_random_book():
             reader = list(csv.DictReader(csvfile))
             book = random.choice(reader)
             return {
-                "title": book.get("Title", "Не указано"),
+                "title": book.get("title", "Не указано"),
                 "authors": book.get("authors", "Не указано"),
                 "published_year": book.get("published_year", "Не указано"),
                 "categories": book.get("categories", "Не указано"),
