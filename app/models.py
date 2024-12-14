@@ -5,6 +5,8 @@ from passlib.context import CryptContext
 from sqlalchemy import create_engine
 import csv
 import random
+from app.parsing_horo import get_horoscope_and_top_category, get_movies_for_category, get_random_movies
+
 
 Base = declarative_base()
 
@@ -80,3 +82,24 @@ def get_random_movie():
         return {"error": "Файл с фильмами не найден"}
     except Exception as e:
         return {"error": f"Произошла ошибка: {str(e)}"}
+
+
+
+
+
+def get_horoscope_and_movies(sign):
+    horoscope, top_category_info = get_horoscope_and_top_category(sign)
+
+    if horoscope and top_category_info:
+        top_category, stars = top_category_info
+        movies = get_movies_for_category(top_category)
+        random_movies = get_random_movies(movies)
+
+        return {
+            "horoscope": horoscope,
+            "top_category": top_category,
+            "stars": stars,
+            "movies": random_movies
+        }
+
+    return {"error": "Не удалось получить данные"}
