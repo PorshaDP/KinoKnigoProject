@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лента книг</title>
     <link rel="stylesheet" href="/static/styles/style-books.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -33,7 +34,6 @@
     </header>
 
     <main>
-
         <section>
             <h2>Рекомендации</h2>
             <form id="recommendation-form">
@@ -45,7 +45,7 @@
             <div id="recommendations">
                 <h3>Рекомендованные книги:</h3>
                 <div id="recommendation-cards" class="row mt-3">
-
+                    <!-- Карточки с книгами будут здесь -->
                 </div>
             </div>
         </section>
@@ -62,7 +62,7 @@
             const title = document.getElementById("book-title").value;
 
             try {
-
+                // Отправка запроса на сервер для получения рекомендаций
                 const response = await fetch("/recommend_books", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -71,32 +71,35 @@
 
                 if (!response.ok) throw new Error("Ошибка получения рекомендаций");
 
-
+                // Получаем рекомендации в формате JSON
                 const recommendations = await response.json();
 
-
                 const recommendationCardsContainer = document.getElementById("recommendation-cards");
-                recommendationCardsContainer.innerHTML = ""; 
+                recommendationCardsContainer.innerHTML = "";  // Очищаем контейнер перед добавлением новых карточек
 
-
+                // Перебираем каждую книгу и создаем карточку
                 recommendations.forEach(book => {
                     const card = document.createElement("div");
-                    card.classList.add("col-lg-4", "col-md-6", "mb-4"); 
+                    card.classList.add("col-lg-4", "col-md-6", "mb-4"); // Размеры карточек
+
+                    // Вставляем информацию о книге в карточку
                     card.innerHTML = `
                         <div class="card">
-                            <img src="${book.image}" class="card-img-top" alt="${book.title}">
+                            <img src="${book.thumbnail}" class="card-img-top" alt="${book.title}">
                             <div class="card-body">
                                 <h5 class="card-title">${book.title || "Без названия"}</h5>
                                 <p class="card-text">${book.description || "Описание отсутствует"}</p>
+                                <p><strong>Автор:</strong> ${book.authors || "Не указан"}</p>
+                                <p><strong>Год издания:</strong> ${book.published_year || "Не указан"}</p>
+                                <p><strong>Рейтинг:</strong> ${book.average_rating || "Нет рейтинга"}</p>
                                 <a href="#" class="btn btn-outline-dark">Подробнее</a>
                             </div>
                         </div>
                     `;
-                    recommendationCardsContainer.appendChild(card); 
+                    recommendationCardsContainer.appendChild(card);  // Добавляем карточку в контейнер
                 });
             } catch (error) {
-
-                alert("Ошибка: " + error.message);
+                alert("Ошибка: " + error.message);  // Выводим ошибку, если что-то пошло не так
             }
         });
     </script>

@@ -199,6 +199,7 @@ async def recommend_movies(request: MovieRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+
 class BookRequest(BaseModel):
     title: str  # Название книги
     num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
@@ -235,6 +236,7 @@ async def recommend_books(request: BookRequest):
     if "error" in recommendations:
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
+
 
 # Страница книг
 @app.get("/books", response_class=HTMLResponse)

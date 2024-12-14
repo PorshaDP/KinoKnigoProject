@@ -44,11 +44,11 @@ def get_user_by_name(db: Session, name: str):
 def get_random_book():
 
     try:
-        with open("app/learning/filtered_books.csv", encoding="utf-8") as csvfile:
+        with open("app/learning/filtered_translated_books.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             book = random.choice(reader)
             return {
-                "title": book.get("title", "Не указано"),
+                #"title": book.get("title", "Не указано"),
                 "authors": book.get("authors", "Не указано"),
                 "published_year": book.get("published_year", "Не указано"),
                 "categories": book.get("categories", "Не указано"),
@@ -64,17 +64,17 @@ def get_random_book():
 
 
 def get_random_movie():
-
     try:
-        with open("app/learning/filtered_movies.csv", encoding="utf-8") as csvfile:
+        with open("app/learning/THUMBNAILS_translated_movies.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             movie = random.choice(reader)
             return {
-                "title": movie.get("title", "Не указано"),
+                #"title": movie.get("Title", "Не указано"),
                 "genre": movie.get("Genre", "Не указано"),
                 "year": movie.get("Year", "Не указано"),
                 "score": movie.get("Score", "Нет оценки"),
                 "description": movie.get("Description", "Описание отсутствует"),
+                "poster_url": movie.get("Poster_URL", ""),  # Добавляем URL постера
             }
     except FileNotFoundError:
         return {"error": "Файл с фильмами не найден"}
