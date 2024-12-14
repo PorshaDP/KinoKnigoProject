@@ -5,6 +5,8 @@ from passlib.context import CryptContext
 from sqlalchemy import create_engine
 import csv
 import random
+from app.parsing_horo import get_horoscope_and_top_category, get_movies_for_category, get_random_movies
+
 
 Base = declarative_base()
 
@@ -44,11 +46,11 @@ def get_user_by_name(db: Session, name: str):
 def get_random_book():
 
     try:
-        with open("app/learning/filtered_books.csv", encoding="utf-8") as csvfile:
+        with open("app/learning/filtered_translated_books.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             book = random.choice(reader)
             return {
-                "title": book.get("title", "Не указано"),
+                #"title": book.get("title", "Не указано"),
                 "authors": book.get("authors", "Не указано"),
                 "published_year": book.get("published_year", "Не указано"),
                 "categories": book.get("categories", "Не указано"),
@@ -64,19 +66,40 @@ def get_random_book():
 
 
 def get_random_movie():
-
     try:
-        with open("app/learning/filtered_movies.csv", encoding="utf-8") as csvfile:
+        with open("app/learning/THUMBNAILS_translated_movies.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             movie = random.choice(reader)
             return {
-                "title": movie.get("title", "Не указано"),
+                #"title": movie.get("Title", "Не указано"),
                 "genre": movie.get("Genre", "Не указано"),
                 "year": movie.get("Year", "Не указано"),
                 "score": movie.get("Score", "Нет оценки"),
                 "description": movie.get("Description", "Описание отсутствует"),
+                "poster_url": movie.get("Poster_URL", ""),  # Добавляем URL постера
             }
     except FileNotFoundError:
         return {"error": "Файл с фильмами не найден"}
     except Exception as e:
         return {"error": f"Произошла ошибка: {str(e)}"}
+
+
+
+
+
+def get_horoscope_and_movies(sign):
+    horoscope, top_category_info = get_horoscope_and_top_category(sign)
+
+    if horoscope and top_category_info:
+        top_category, stars = top_category_info
+        movies = get_movies_for_category(top_category)
+        random_movies = get_random_movies(movies)
+
+        return {
+            "horoscope": horoscope,
+            "top_category": top_category,
+            "stars": stars,
+            "movies": random_movies
+        }
+
+    return {"error": "Не удалось получить данные"}

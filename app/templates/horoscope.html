@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гороскоп</title>
+</head>
+<body>
+    <h1>Гороскоп</h1>
+    <form action="/get_horoscope" method="POST">
+        <label for="sign">Выберите ваш знак зодиака:</label>
+        <select name="sign" id="sign">
+            <option value="aries">Овен</option>
+            <option value="taurus">Телец</option>
+            <option value="gemini">Близнецы</option>
+            <option value="cancer">Рак</option>
+            <option value="leo">Лев</option>
+            <option value="virgo">Дева</option>
+            <option value="libra">Весы</option>
+            <option value="scorpio">Скорпион</option>
+            <option value="sagittarius">Стрелец</option>
+            <option value="capricorn">Козерог</option>
+            <option value="aquarius">Водолей</option>
+            <option value="pisces">Рыбы</option>
+        </select>
+        <button type="submit">Получить гороскоп</button>
+    </form>
+    
+    {% if horoscope %}
+        <h2>Гороскоп для {{ sign|capitalize }}:</h2>
+        <p>{{ horoscope }}</p>
+        <h3>Лучшая категория: {{ top_category }} ({{ stars }} звёзд)</h3>
+        <h3>Фильмы:</h3>
+        <ul>
+            {% for movie in random_movies %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ error }}</p>
+    {% endif %}
+</body>
+</html>

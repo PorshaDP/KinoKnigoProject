@@ -13,6 +13,7 @@ from app.learning import new_model, translated_model_for_movies, translated_mode
 from pydantic import BaseModel
 from app.models import get_random_book, get_random_movie
 
+from app.models import get_horoscope_and_movies  
 
 # Настройки приложения
 SECRET_KEY = "a2f6c1b3e8d9f7a2c3d4b5e6f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9g0"
@@ -199,6 +200,7 @@ async def recommend_movies(request: MovieRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+
 class BookRequest(BaseModel):
     title: str  # Название книги
     num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
@@ -236,6 +238,7 @@ async def recommend_books(request: BookRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+
 # Страница книг
 @app.get("/books", response_class=HTMLResponse)
 async def get_books_page(request: Request):
@@ -254,3 +257,56 @@ async def randomizer(request: Request):
         "book": random_book,
         "movie": random_movie,
     })
+
+# Обработчик GET запроса для отображения формы
+@app.get("/get_horoscope")
+async def get_horoscope_form(request: Request):
+    return templates.TemplateResponse("horoscope.html", {"request": request})
+
+@app.post("/get_horoscope")
+async def get_horoscope(request: Request, sign: str = Form(...)):
+    result = get_horoscope_and_movies(sign)
+
+    if "error" in result:
+        return templates.TemplateResponse("error.html", {"request": request, "error": result["error"]})
+
+    horoscope = result["horoscope"]
+    top_category = result["top_category"]
+    stars = result["stars"]
+    random_movies = result["movies"]
+
+    # Добавляем к каждому фильму дополнительные данные, такие как картинка, описание, год и рейтинг
+    # Пример:
+    for movie in random_movies:
+        movie["poster_url"] = movie.get("poster_url", "default_thumbnail.jpg")  # Если нет картинки, ставим дефолт
+        movie["year"] = movie.get("year", "Не указан")
+        movie["rating"] = movie.get("rating", "Не указан")
+        movie["description"] = movie.get("description", "Описание отсутствует")
+
+    return templates.TemplateResponse("result.html", {
+        "request": request, 
+        "horoscope": horoscope, 
+        "top_category": top_category, 
+        "stars": stars, 
+        "random_movies": random_movies,
+        "sign": sign  
+    })
+
+def zodiac_translation(sign: str):
+    translations = {
+        'aries': 'Овнов',
+        'taurus': 'Тельцов',
+        'gemini': 'Близнецов',
+        'cancer': 'Раков',
+        'leo': 'Львов',
+        'virgo': 'Дев',
+        'libra': 'Весов',
+        'scorpio': 'Скорпионов',
+        'sagittarius': 'Стрельцов',
+        'capricorn': 'Козерогов',
+        'aquarius': 'Водолеев',
+        'pisces': 'Рыб',
+    }
+    return translations.get(sign.lower(), sign.capitalize())
+
+templates.env.filters["zodiac_translation"] = zodiac_translation

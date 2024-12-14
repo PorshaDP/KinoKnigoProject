@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гороскоп</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1>Гороскоп для {{ sign | zodiac_translation }}</h1>
+        <p>{{ horoscope }}</p>
+        <h3>Лучшая категория: {{ top_category }} ({{ stars }} звёзд)</h3>
+
+        <h3>Фильмы:</h3>
+        <div class="row mt-3">
+            {% for movie in random_movies %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="{{ movie.poster_url }}" class="card-img-top" alt="{{ movie.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text">{{ movie.description }}</p>
+                            <p><strong>Год выпуска:</strong> {{ movie.year }}</p>
+                            <p><strong>Рейтинг:</strong> {{ movie.rating }}</p>
+                            <a href="#" class="btn btn-outline-dark">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
