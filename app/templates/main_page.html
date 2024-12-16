@@ -5,26 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
-    <link rel="stylesheet" href="/static/styles/style-main_page.css">
+    <link rel="stylesheet" href="static/styles/fonts.css">
+    <link rel="stylesheet" href="static/styles/style-main_page.css">
 </head>
 
 <body>
-    <header>
-        <h1>Добро пожаловать на сайт книг и фильмов</h1>
-    </header>
+    <header class="header">
 
+        <div class="container">
+            <div class="wrapper">
+                <div class="left-section">
+                    <img src="static/images/логотип.png" class="logo" />
+                    <span class="name">two <br>chairs</span>
+                </div>
+                <div class="main-section">
+                    <!-- <form action="">
+                        <input type="text" class="search-bar">
+                    </form> -->
+                </div>
+                <div class="right-section">
+                    <div>
+                        <a href="/profile">
+                            <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Avatar">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
     <main>
+        <h1 class="headtext">Добро пожаловать на сайт книг и фильмов</h1>
         <section>
             <div class="cards">
                 <div class="card">
+<<<<<<< HEAD
                     <div class="card__top" >
+=======
+                    <div class="card__top">
+>>>>>>> frontend-new
                         <a href="/books" class="card__image">
                             <img src="static/images/кнтги.png" />
                         </a>
                     </div>
                     <div class="card__bottom">
                         <a href="/books" class="card__title">
-                            Читать
+                            Книги
                         </a>
                     </div>
                 </div>
@@ -36,7 +62,7 @@
                     </div>
                     <div class="card__bottom">
                         <a href="/movies" class="card__title">
-                            Лента фильмов
+                            Фильмы
                         </a>
                     </div>
                 </div>
@@ -54,24 +80,12 @@
                 </div>
                 <div class="card">
                     <div class="card__top">
-                        <a href="/profile" class="card__image">
-                            <img src="static/images/профиль.png" />
-                        </a>
-                    </div>
-                    <div class="card__bottom">
-                        <a href="/profile" class="card__title">
-                            Профиль
-                        </a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card__top">
-                        <a href="/get_horoscope" class="card__image">
+                        <a href="/horoscope" class="card__image">
                             <img src="static/images/загруженное (1).jpg" />
                         </a>
                     </div>
                     <div class="card__bottom">
-                        <a href="/get_horoscope" class="card__title">
+                        <a href="/horoscope" class="card__title">
                             Гороскоп
                         </a>
                     </div>
@@ -80,9 +94,9 @@
         </section>
     </main>
 
-    <footer>
+    <!-- <footer>
         <p>&copy; Мы еще и меню</p>
-    </footer>
+    </footer> -->
 </body>
 
 </html>
