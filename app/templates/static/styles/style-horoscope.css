@@ -219,3 +219,8 @@ footer {
   gap: 8px;
   height: 100%;
 }
+
+.dopinf{
+  text-align: center;
+  color: rgb(65, 10, 10);
+}
