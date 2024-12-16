@@ -8,7 +8,7 @@ from app.models import Base, User, SessionLocal, engine, create_user, get_user_b
 from datetime import datetime, timedelta
 import jwt, os
 
-from app.learning import new_model, translated_model_for_movies, translated_model_for_books
+from app.learning import translated_model_for_movies, translated_model_for_books
 
 from pydantic import BaseModel
 from app.models import get_random_book, get_random_movie
@@ -181,7 +181,7 @@ async def login_user(
 # Модель запроса для фильмов
 class MovieRequest(BaseModel):
     title: str
-    num_recommendations: int = 5
+    num_recommendations: int = 12
 
 
 # Эндпоинт для обучения модели
@@ -200,10 +200,13 @@ async def recommend_movies(request: MovieRequest):
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations
 
+@app.get("/movies", response_class=HTMLResponse)
+async def get_movie(request: Request):
+    return templates.TemplateResponse("movie.html", {"request": request})
 
 class BookRequest(BaseModel):
     title: str  # Название книги
-    num_recommendations: int = 10  # Количество рекомендаций (по умолчанию 10)
+    num_recommendations: int = 12  # Количество рекомендаций (по умолчанию 10)
 
 # Эндпоинт для обучения модели
 @app.post("/train_model_books")
@@ -217,23 +220,6 @@ async def train_model():
 @app.post("/recommend_books")
 async def recommend_books(request: BookRequest):
     recommendations = translated_model_for_books.recommend_books(request.title, request.num_recommendations)
-    if "error" in recommendations:
-        raise HTTPException(status_code=404, detail=recommendations["error"])
-    return recommendations
-
-@app.get("/movies", response_class=HTMLResponse)
-async def get_movie(request: Request):
-    return templates.TemplateResponse("movie.html", {"request": request})
-
-# Модель запроса для книг
-class BookRequest(BaseModel):
-    title: str
-    num_recommendations: int = 10
-
-# Рекомендации книг
-@app.post("/recommend_books")
-async def recommend_books(request: BookRequest):
-    recommendations = new_model_for_books.recommend_books(request.title, request.num_recommendations)
     if "error" in recommendations:
         raise HTTPException(status_code=404, detail=recommendations["error"])
     return recommendations

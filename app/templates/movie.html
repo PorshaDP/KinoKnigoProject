@@ -62,7 +62,7 @@
                 const response = await fetch("/recommend_movies", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ title: title, num_recommendations: 5 })
+                    body: JSON.stringify({ title: title, num_recommendations: 12 })
                 });
 
                 if (!response.ok) throw new Error("Ошибка получения рекомендаций");
@@ -78,7 +78,7 @@
 
                     card.innerHTML = `
                         <div class="card">
-                            <img src="${movie.Poster || 'static/images/default-movie.jpg'}" class="card-img-top" alt="${movie.Title}">
+                            <img src="${movie.Poster_URL || 'static/images/default-movie.jpg'}" class="card-img-top" alt="${movie.Title}">
                             <div class="card-body">
                                 <h5 class="card-title">${movie.Title} (${movie.Year})</h5>
                                 <p class="card-text">Жанр: ${movie.Genre}</p>
