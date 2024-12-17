@@ -41,21 +41,28 @@
     </header>
     <div class="container">
         <aside class="aside-container">
-            <img class="profile-avatar" src="https://avatar.iran.liara.run/public/22" alt="Profile Photo">
-            <p>Email: {{ user.email }}</p>
-            {% if user.photo_path %}
-            {% else %}
-            <p>Никто не знает, как Вы выглядете.</p>
-            {% endif %}
-        </aside>
+<!-- Картинка профиля (по умолчанию) -->
+    <img class="profile-avatar"
+        src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}"
+        alt="Profile Photo">
+    <p>Email: {{ user.email }}</p>
+</aside>
         <div class="content-container">
-            <h1>Добро пожаловать, {{ user.name }}</h1>
-            <form action="/upload_photo" method="post" enctype="multipart/form-data">
-                <label for="file">Загрузите свое фото:</label>
-                <input type="file" id="file" name="file">
-                <button type="submit">Upload</button>
-            </form>
-        </div>
+    <h1>Добро пожаловать, {{ user.name }}</h1>
+
+    <!-- Форма загрузки нового фото -->
+    <form action="/upload_photo" method="post" enctype="multipart/form-data">
+        <label for="file-upload">Загрузите свое фото:</label>
+        <input type="file" id="file-upload" name="file">
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Форма удаления фото -->
+    <form action="/delete_photo" method="post" enctype="multipart/form-data">
+
+        <button type="submit">Delete</button>
+    </form>
+</div>
 
     </div>
 
