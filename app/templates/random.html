@@ -10,151 +10,79 @@
 </head>
 
 <body>
-
+    <!-- Header -->
     <header class="header">
-
         <div class="container">
             <div class="wrapper">
                 <div class="left-section">
-                    <img src="static/images/логотип.png" class="logo" />
+                    <img src="static/images/логотип.png" class="logo" alt="Logo" />
                     <span class="name">two <br>chairs</span>
                 </div>
-                <div class="main-section">
-                    <!-- <form action="">
-                        <input type="text" class="search-bar">
-                    </form> -->
-                </div>
                 <div class="right-section">
-                    <div>
-                        <a href="/profile">
-                            <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Avatar">
-                        </a>
-                    </div>
+                    <a href="/profile">
+                        <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Avatar">
+                    </a>
                 </div>
             </div>
         </div>
-
     </header>
+
+    <!-- Main Content -->
     <main class="main">
         <div class="container">
             <div class="wrapper">
+                <!-- Left Navigation -->
                 <div class="left-section">
                     <nav class="navigation">
-                        <a class="navigation-item " href="/main">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-house">
-                                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
-                                <path
-                                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            </svg>
+                        <a class="navigation-item" href="/main">
                             Домой
                         </a>
-                        <a class="navigation-item " href="/books">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-library-big">
-                                <rect width="8" height="18" x="3" y="3" rx="1" />
-                                <path d="M7 3v18" />
-                                <path
-                                    d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z" />
-                            </svg>
+                        <a class="navigation-item" href="/books">
                             Книги
                         </a>
                         <a class="navigation-item" href="/movies">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-clapperboard">
-                                <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z" />
-                                <path d="m6.2 5.3 3.1 3.9" />
-                                <path d="m12.4 3.4 3.1 4" />
-                                <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
-                            </svg>
                             Фильмы
                         </a>
                         <a class="navigation-item" href="/horoscope">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-sparkles">
-                                <path
-                                    d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
-                                <path d="M20 3v4" />
-                                <path d="M22 5h-4" />
-                                <path d="M4 17v2" />
-                                <path d="M5 18H3" />
-                            </svg>
                             Гороскоп
                         </a>
                         <a class="navigation-item active" href="/random">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-clover">
-                                <path d="M16.17 7.83 2 22" />
-                                <path
-                                    d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12" />
-                                <path d="m7.83 7.83 8.34 8.34" />
-                            </svg>
                             Мне повезет
                         </a>
                     </nav>
                 </div>
+
+                <!-- Random Recommendations -->
                 <div class="main-section">
                     <h2 class="zag">Случайные рекомендации</h2>
                     <button class="btn" onclick="location.reload()">Сгенерировать снова</button>
-                    <div class="inform">
-                        <p class="books">Случайная книга:</p>
-                        <p class="movie">Случайный фильм:</p>
-                    </div>
                     <div class="cards">
+                        <!-- Book Card -->
                         <div class="card">
                             <div class="card__top">
-                                <img class="card__image" src="static/images/профиль.png" />
+                                <img class="card__image" src="{{ book.thumbnail }}" alt="Book Thumbnail" />
                             </div>
                             <div class="card__bottom">
-                                <div class="recommendation">
-                                    <p><span class="card_title">Название:</span> {{ book.title }}</p>
-                                    <p><strong>Автор(ы):</strong> {{ book.authors }}</p>
-                                    <p><strong>Год публикации:</strong> {{ book.published_year }}</p>
-                                    <p><strong>Категория:</strong> {{ book.categories }}</p>
-                                    <p><strong>Описание:</strong> {{ book.description }}</p>
-                                    <div class="rating">
-                                        <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" class="lucide lucide-star">
-                                            <path
-                                                d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                                        </svg>
-                                        <span>{{ book.average_rating }}</span>
-                                    </div>
-                                    <p><strong>Количество страниц:</strong> {{ book.num_pages }}</p>
-                                    {% if book.thumbnail %}
-                                    <img src="{{ book.thumbnail }}" alt="Обложка книги">
-                                    {% endif %}
-                                </div>
+                                <h3 class="card_title">{{ book.title }}</h3>
+                                <p><strong>Автор:</strong> {{ book.authors }}</p>
+                                <p><strong>Год публикации:</strong> {{ book.published_year }}</p>
+                                <p><strong>Категория:</strong> {{ book.categories }}</p>
+                                <p><strong>Описание:</strong> {{ book.description }}</p>
+                                <p><strong>Рейтинг:</strong> {{ book.average_rating }}</p>
                                 <button class="card_button">Подробнее</button>
                             </div>
                         </div>
+                        <!-- Movie Card -->
                         <div class="card">
                             <div class="card__top">
-                                <img class="card__image" src="static/images/профиль.png" />
+                                <img class="card__image" src="{{ movie.Post_url }}" alt="Movie Thumbnail" />
                             </div>
                             <div class="card__bottom">
-                                <div class="recommendation">
-                                    <p><span class="card_title">Название</span> {{ movie.title }}</p>
-                                    <p><strong>Жанр:</strong> {{ movie.genre }}</p>
-                                    <p><strong>Год выпуска:</strong> {{ movie.year }}</p>
-                                    <div class="rating">
-                                        <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" class="lucide lucide-star">
-                                            <path
-                                                d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                                        </svg>
-                                        <span>{{ movie.score }}</span>
-                                    </div>
-                                    <p><strong>Описание:</strong> {{ movie.description }}</p>
-                                </div>
-
+                                <h3 class="card_title">{{ movie.title }}</h3>
+                                <p><strong>Жанр:</strong> {{ movie.genre }}</p>
+                                <p><strong>Год выпуска:</strong> {{ movie.year }}</p>
+                                <p><strong>Описание:</strong> {{ movie.description }}</p>
+                                <p><strong>Рейтинг:</strong> {{ movie.score }}</p>
                                 <button class="card_button">Подробнее</button>
                             </div>
                         </div>
@@ -163,11 +91,6 @@
             </div>
         </div>
     </main>
-
-    <!-- <footer>
-        <p>&copy; 2024 Ваш сайт рандомайзера</p>
-    </footer> -->
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
