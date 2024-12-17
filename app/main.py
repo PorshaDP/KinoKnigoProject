@@ -26,8 +26,9 @@ templates = Jinja2Templates(directory="app/templates")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # Директория для загрузки файлов
-UPLOAD_DIR = "app/static/uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+UPLOAD_DIR = os.path.join(os.getcwd(), "app/static/uploads")
+if not os.path.exists(UPLOAD_DIR):
+    os.makedirs(UPLOAD_DIR)
 
 # Инициализация базы данных
 Base.metadata.create_all(bind=engine)
@@ -83,34 +84,56 @@ async def get_profile(request: Request, access_token: str = Cookie(None)):
         "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
     })
 
+
 @app.post("/upload_photo", response_class=HTMLResponse)
 async def upload_photo(
-    request: Request,
-    access_token: str = Cookie(None),
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db)
+        request: Request,
+        access_token: str = Cookie(None),
+        file: UploadFile = File(None),  # Делаем файл необязательным
+        db: Session = Depends(get_db)
 ):
+    # Проверяем наличие токена
     if not access_token:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    
+
     user_data = verify_token(access_token)
     user = get_user_by_email(db, user_data["sub"])
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    # Проверяем, был ли загружен файл
+    if not file or file.filename == "":
+        return templates.TemplateResponse("profile.html", {
+            "request": request,
+            "user": {
+                "name": user.name,
+                "email": user.email,
+                "photo_path": user.photo_path,
+            },
+            "error": "Файл не выбран. Пожалуйста, выберите файл для загрузки.",
+        })
 
-    file_path = os.path.join(UPLOAD_DIR, file.filename)
-    with open(file_path, "wb") as f:
-        f.write(await file.read())
-    
+    # Проверяем директорию для загрузки
+    if not os.path.exists(UPLOAD_DIR):
+        os.makedirs(UPLOAD_DIR)
 
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=500, detail="Ошибка сохранения файла")
+    # Генерируем уникальное имя для файла
+    unique_filename = f"{user.id}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
+    file_path = os.path.join(UPLOAD_DIR, unique_filename)
 
-    user.photo_path = f"/static/uploads/{file.filename}"
+    try:
+        # Сохраняем файл
+        with open(file_path, "wb") as f:
+            f.write(await file.read())
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка сохранения файла: {str(e)}")
+
+    # Сохраняем путь к файлу в базе данных
+    user.photo_path = f"/static/uploads/{unique_filename}"
     db.add(user)
     db.commit()
 
+    # Возвращаем обновлённый профиль
     return templates.TemplateResponse("profile.html", {
         "request": request,
         "user": {"name": user.name, "email": user.email, "photo_path": user.photo_path}
