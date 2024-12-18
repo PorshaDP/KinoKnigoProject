@@ -4,7 +4,16 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 from sqlalchemy.orm import Session
-from app.models import Base, User, SessionLocal, engine, create_user, get_user_by_email, get_user_by_name, hash_password, verify_password
+from app.models import (
+    Base,
+    User,
+    SessionLocal,
+    engine,
+    create_user,
+    get_user_by_email,
+    hash_password,
+    verify_password,
+)
 from datetime import datetime, timedelta
 import jwt, os
 
@@ -60,8 +69,48 @@ def verify_token(token: str):
 
 # Главная страница
 @app.get("/", response_class=HTMLResponse)
-async def auth_menu(request: Request):
-    return templates.TemplateResponse("auth_menu.html", {"request": request})
+async def auth_menu():
+    return templates.TemplateResponse("auth_menu.html", {"request": {}})
+
+# Страница входа
+@app.get("/login", response_class=HTMLResponse)
+async def login_page():
+    return templates.TemplateResponse("login.html", {"request": {}})
+
+@app.post("/login")
+async def login(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = get_user_by_email(db, email)
+    if not user or not verify_password(password, user.password):
+        raise HTTPException(status_code=400, detail="Неправильный email или пароль")
+    
+    # Генерация токена
+    token = create_access_token({"sub": user.email})
+    
+    # Перенаправление на главную страницу
+    response = RedirectResponse(url="/main", status_code=302)
+    response.set_cookie(key="access_token", value=token, httponly=True)
+    return response
+
+# Страница регистрации
+@app.get("/register", response_class=HTMLResponse)
+async def register_page():
+    return templates.TemplateResponse("register.html", {"request": {}})
+
+# Обработка регистрации
+@app.post("/register")
+async def register(
+    name: str = Form(...),
+    email: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    if get_user_by_email(db, email):
+        raise HTTPException(status_code=400, detail="Пользователь с таким email уже существует")
+    
+    hashed_password = hash_password(password)
+    create_user(db, name=name, email=email, password=hashed_password)
+    return RedirectResponse("/login", status_code=302)
+
 
 # Главная страница приложения
 @app.get("/main", response_class=HTMLResponse)
