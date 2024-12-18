@@ -77,7 +77,7 @@ def recommend_movies(movie_title, num_recommendations=10):
         distances, indices = knn_model.kneighbors(movie_features, n_neighbors=num_recommendations + 1)
 
         recommended_movies = movies.iloc[indices[0][1:]]
-        recommendations = recommended_movies[['Title', 'Genre', 'Year', 'Score', 'Description', 'Poster_URL']].to_dict(orient='records')
+        recommendations = recommended_movies[['Title', 'Genre', 'Year', 'Score', 'Description', 'alt_name']].to_dict(orient='records')
 
         return recommendations
 
