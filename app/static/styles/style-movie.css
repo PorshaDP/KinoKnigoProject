@@ -60,7 +60,7 @@ a {
 }
 .navigation-item:hover {
   color: #fff; 
-  background: rgb(243, 191, 68); 
+  background: rgb(243, 191, 68);
 }
 
 .navigation-item.active {
