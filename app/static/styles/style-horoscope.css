@@ -55,12 +55,19 @@ a {
 }
 
 .navigation-item {
+  text-decoration: none;
+  background: #fff; 
+  transition: 0.5s linear; 
   padding: 8px 12px;
   border-radius: 999px;
   display: flex;
   gap: 8px;
   color: black;
   align-items: center;
+}
+.navigation-item:hover {
+  color: #fff; 
+  background: rgb(243, 191, 68); 
 }
 
 .navigation-item.active {
