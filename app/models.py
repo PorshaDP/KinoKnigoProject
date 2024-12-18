@@ -6,7 +6,11 @@ from sqlalchemy import create_engine
 import csv
 import random
 from app.parsing_horo import get_horoscope_and_top_category, get_movies_for_category, get_random_movies
+import os
+import logging
 
+# Логирование для отладки
+logging.basicConfig(level=logging.DEBUG)
 
 Base = declarative_base()
 
@@ -66,25 +70,44 @@ def get_random_book():
         return {"error": f"Произошла ошибка: {str(e)}"}
 
 
+
 def get_random_movie():
     try:
         with open("app/learning/THUMBNAILS_translated_movies.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             movie = random.choice(reader)
+            #movie_title = movie.get("Title", "Не указано")
+
+
+            # Получаем alt_name для картинки
+            alt_name = movie.get("alt_name")  # Используем alt_name, если он есть, иначе transliterated_title
+
+            # Формируем путь к изображению относительно папки /static/
+            image_folder = "app/static/movie_posters"
+            image_filename = f"{alt_name}.jpg"  # или .png, если формат другой
+            image_path = os.path.join(image_folder, image_filename)
+
+            # Проверяем, существует ли файл изображения
+            if not os.path.isfile(image_path):
+                image_path = ""  # если изображения нет, возвращаем пустую строку
+            else:
+                # Путь для использования в HTML
+                image_path = f"/static/movie_posters/{alt_name}.jpg"
+
+            # Логирование для отладки
+            logging.debug(f"Image path: {image_path}")
+
             return {
-                #"title": movie.get("Title", "Не указано"),
                 "genre": movie.get("Genre", "Не указано"),
                 "year": movie.get("Year", "Не указано"),
                 "score": movie.get("Score", "Нет оценки"),
                 "description": movie.get("Description", "Описание отсутствует"),
-                "poster_url": movie.get("Poster_URL", ""),  # Добавляем URL постера
+                "poster_url": image_path,  # Указываем путь к картинке
             }
     except FileNotFoundError:
         return {"error": "Файл с фильмами не найден"}
     except Exception as e:
         return {"error": f"Произошла ошибка: {str(e)}"}
-
-
 
 
 
