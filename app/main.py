@@ -118,11 +118,23 @@ async def register(
     return RedirectResponse("/login", status_code=302)
 
 
-# Главная страница приложения
 @app.get("/main", response_class=HTMLResponse)
-async def main_page(request: Request):
-    return templates.TemplateResponse("main_page.html", {"request": request})
+async def main_page(request: Request, access_token: str = Cookie(None), db: Session = Depends(get_db)):
+    # Проверка наличия токена
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
 
+    # Проверка и извлечение данных пользователя
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Передача данных пользователя в шаблон
+    return templates.TemplateResponse("main_page.html", {
+        "request": request,
+        "user": user
+    })
 @app.get("/profile", response_class=HTMLResponse)
 async def get_profile(request: Request, access_token: str = Cookie(None)):
     if not access_token:
@@ -279,8 +291,26 @@ async def recommend_movies(request: MovieRequest):
     return recommendations
 
 @app.get("/movies", response_class=HTMLResponse)
-async def get_movie(request: Request):
-    return templates.TemplateResponse("movie.html", {"request": request})
+async def get_movie(request: Request, access_token: str = Cookie(None), db: Session = Depends(get_db)):
+    # Проверка наличия токена
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Извлечение данных пользователя
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Получаем случайный фильм (если необходимо)
+    random_movie = get_random_movie()
+
+    # Передаем данные в шаблон
+    return templates.TemplateResponse("movie.html", {
+        "request": request,
+        "user": user,
+        "movie": random_movie,
+    })
 
 class BookRequest(BaseModel):
     title: str  # Название книги
@@ -303,29 +333,69 @@ async def recommend_books(request: BookRequest):
     return recommendations
 
 
-# Страница книг
 @app.get("/books", response_class=HTMLResponse)
-async def get_books_page(request: Request):
-    return templates.TemplateResponse("books.html", {"request": request})
+async def get_books_page(request: Request, access_token: str = Cookie(None), db: Session = Depends(get_db)):
+    # Проверка наличия токена
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Проверка и извлечение данных пользователя
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Передача данных пользователя и книг в шаблон
+    return templates.TemplateResponse("books.html", {
+        "request": request,
+        "user": user
+    })
 
 
 
 @app.get("/random", response_class=HTMLResponse)
-async def randomizer(request: Request):
+async def randomizer(request: Request, access_token: str = Cookie(None), db: Session = Depends(get_db)):
 
+    # Проверка наличия токена
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Извлечение данных пользователя
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Получаем случайную книгу и фильм
     random_book = get_random_book()
     random_movie = get_random_movie()
 
+    # Передаем данные в шаблон
     return templates.TemplateResponse("random.html", {
         "request": request,
         "book": random_book,
         "movie": random_movie,
+        "user": user
     })
 
-# Обработчик GET запроса для отображения формы
-@app.get("/get_horoscope")
-async def get_horoscope_form(request: Request):
-    return templates.TemplateResponse("horoscope.html", {"request": request})
+
+@app.get("/get_horoscope", response_class=HTMLResponse)
+async def get_horoscope_form(request: Request, access_token: str = Cookie(None), db: Session = Depends(get_db)):
+    # Проверка наличия токена
+    if not access_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Извлечение данных пользователя
+    user_data = verify_token(access_token)
+    user = get_user_by_email(db, user_data["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Отправляем данные в шаблон
+    return templates.TemplateResponse("horoscope.html", {
+        "request": request,
+        "user": user
+    })
 
 @app.post("/get_horoscope")
 async def get_horoscope(request: Request, sign: str = Form(...)):
