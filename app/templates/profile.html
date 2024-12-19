@@ -11,10 +11,11 @@
 
 <body>
     <header class="header">
-
         <div class="head_container">
             <div class="wrapper">
                 <div class="left-section">
+                    <img src="static/images/логотип.png" class="logo" />
+                    <span class="name">two <br>chairs</span>
                 </div>
                 <div class="main-section">
                     <!-- <form action="">
@@ -22,7 +23,7 @@
                     </form> -->
                 </div>
                 <div class="right-section">
-                    <div >
+                    <div>
                         <a class="navigation-item " href="/main">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -41,28 +42,27 @@
     </header>
     <div class="container">
         <aside class="aside-container">
-<!-- Картинка профиля (по умолчанию) -->
-    <img class="profile-avatar"
-        src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}"
-        alt="Profile Photo">
-    <p>Email: {{ user.email }}</p>
-</aside>
+            <!-- Картинка профиля (по умолчанию) -->
+            <img class="profile-avatar"
+                src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}" alt="Profile Photo">
+            <p>Email: {{ user.email }}</p>
+        </aside>
         <div class="content-container">
-    <h1>Добро пожаловать, {{ user.name }}</h1>
+            <h1>Добро пожаловать, {{ user.name }}</h1>
 
-    <!-- Форма загрузки нового фото -->
-    <form action="/upload_photo" method="post" enctype="multipart/form-data">
-        <label for="file-upload">Загрузите свое фото:</label>
-        <input type="file" id="file-upload" name="file">
-        <button type="submit">Upload</button>
-    </form>
+            <!-- Форма загрузки нового фото -->
+            <form action="/upload_photo" method="post" enctype="multipart/form-data">
+                <label class="down" for="file-upload">Загрузите свое фото:</label>
+                <input type="file" id="file-upload" name="file">
+                <button class="upload" type="submit">Upload</button>
+            </form>
 
-    <!-- Форма удаления фото -->
-    <form action="/delete_photo" method="post" enctype="multipart/form-data">
+            <!-- Форма удаления фото -->
+            <form action="/delete_photo" method="post" enctype="multipart/form-data">
 
-        <button type="submit">Delete</button>
-    </form>
-</div>
+                <button class="delete" type="submit">Delete</button>
+            </form>
+        </div>
 
     </div>
 

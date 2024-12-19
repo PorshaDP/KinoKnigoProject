@@ -12,7 +12,6 @@
 <body>
 
     <header class="header">
-
         <div class="container">
             <div class="wrapper">
                 <div class="left-section">
@@ -20,21 +19,27 @@
                     <span class="name">two <br>chairs</span>
                 </div>
                 <div class="main-section">
-                    <form action="">
-                        <input type="text" class="search-bar">
+                    <form class="search-form" id="searchForm">
+                        <input type="text" class="search-bar" id="searchInput" placeholder="Поиск книг..."
+                            aria-label="Поиск книг" oninput="searchBooks()">
+                        <div id="suggestions" class="suggestions"></div>
+                        <button type="submit" hidden></button>
                     </form>
+
+                    <ul id="results"></ul>
                 </div>
                 <div class="right-section">
                     <div>
                         <a href="/profile">
-                            <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Avatar">
+                            <img class="avatar"
+                                src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Avatar">
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-
     </header>
+
     <main class="main">
         <div class="container">
             <div class="wrapper">
@@ -85,7 +90,7 @@
                             </svg>
                             Гороскоп
                         </a>
-                        <a class="navigation-item" href="/random">
+                        <a class="navigation-item " href="/random">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-clover">
@@ -99,64 +104,162 @@
                     </nav>
                 </div>
                 <div class="main-section">
-                    <div class="cards">
-                        <div class="card">
-                            <div class="card__top">
-                                <img class="card__image" src="static/images/профиль.png" />
-                            </div>
-                            <div class="card__bottom">
-                                <span class="card_title">Название</span>
-                                <div class="rating">
-                                    <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-star">
-                                        <path
-                                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                                    </svg>
-                                    <span>4.37</span>
-                                </div>
-                                <button class="card_button">Подробнее</button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card__top">
-                                <img class="card__image" src="static/images/профиль.png" />
-                            </div>
-                            <div class="card__bottom">
-                                <span class="card_title">Название</span>
-                                <div class="rating">
-                                    <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-star">
-                                        <path
-                                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                                    </svg>
-                                    <span>4.37</span>
-                                </div>
-                                <button class="card_button">Подробнее</button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card__top">
-                                <img class="card__image" src="static/images/профиль.png" />
-                            </div>
-                            <div class="card__bottom">
-                                <span class="card_title">Название</span>
-                                <div class="rating">
-                                    <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-star">
-                                        <path
-                                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                                    </svg>
-                                    <span>4.37</span>
-                                </div>
-                                <button class="card_button">Подробнее</button>
-                            </div>
-                        </div>
+                    <div class="cards" id="movie-cards">
+                        <!-- Карточки фильмов будут добавляться сюда с помощью JavaScript -->
                     </div>
+
                 </div>
             </div>
         </div>
     </main>
+
+    <script>
+        // Функция для загрузки фильмов с сервера и отображения их на странице
+        async function fetchMovies(title) {
+            try {
+                // Выполняем запрос к серверу для получения списка фильмов по введенному названию
+                const response = await fetch('/recommend_movies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: title,  // Используем текст из поля ввода
+                        num_recommendations: 12
+                    })
+                });
+
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    throw new Error('Ошибка при получении данных');
+                }
+
+                // Получаем данные
+                const movies = await response.json();
+
+                // Находим контейнер для карточек фильмов
+                const movieCardsContainer = document.getElementById('movie-cards');
+
+                // Очищаем контейнер перед добавлением новых карточек
+                movieCardsContainer.innerHTML = '';
+
+                // Перебираем все фильмы и создаем для них карточки
+                movies.forEach((movie, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.innerHTML = `
+                        <div class="card__top">
+                            <img class="card__image" src="static/movie_posters/${movie.alt_name}.jpg" alt="${movie.Title}" />
+                        </div>
+                        <div class="card__bottom">
+                            <span class="card_title">${movie.Title}</span>
+                            <div class="rating">
+                                <svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star">
+                                    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                                </svg>
+                                <span>${movie.Score}</span>
+                            </div>
+                            <button class="card_button" id="open-${index}">Подробнее</button>
+                            <dialog id="dialog-${index}">
+                                <p>${movie.Description}</p>
+                                <button class="dia" data-id="${index}">Закрыть</button>
+                            </dialog>
+                        </div>
+                    `;
+
+                    movieCardsContainer.appendChild(card);
+
+                    // Добавляем обработчик для кнопки "Подробнее"
+                    document.getElementById(`open-${index}`).addEventListener('click', () => {
+                        document.getElementById(`dialog-${index}`).showModal();
+                    });
+
+                    // Добавляем обработчик для кнопки "Закрыть"
+                    document.querySelector(`#dialog-${index} .dia`).addEventListener('click', () => {
+                        document.getElementById(`dialog-${index}`).close();
+                    });
+                });
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+        // Обработчик для формы поиска
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault();  // Предотвращаем стандартное отправление формы
+
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.trim();
+
+            if (query) {
+                fetchMovies(query);  // Загружаем фильмы, соответствующие запросу
+            }
+        });
+
+        // Получение подсказок
+        // Функция для отправки запроса на сервер и получения результатов
+        async function searchBooks() {
+            const searchInput = document.getElementById('searchInput').value;
+
+            // Не делать запрос, если строка поиска слишком короткая
+            if (searchInput.length < 3) {
+                document.getElementById('results').innerHTML = '';  // Очищаем результаты
+                return;
+            }
+
+            try {
+                // Отправляем запрос на сервер
+                const response = await fetch(`/get_movies_titles?search_query=${encodeURIComponent(searchInput)}`);
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при получении данных с сервера');
+                }
+
+                const data = await response.json();
+                console.log('Данные, полученные с сервера:', data);  // Проверяем, что пришло от сервера
+
+                // Обновляем результаты на странице
+                const resultsContainer = document.getElementById('results');
+                resultsContainer.innerHTML = '';  // Очищаем предыдущие результаты
+
+                if (data.titles && data.titles.length > 0) {
+                    // Отображаем найденные книги
+                    data.titles.forEach(title => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = title;
+                        resultsContainer.appendChild(listItem);
+                    });
+                } else {
+                    // Если книг не найдено
+                    resultsContainer.innerHTML = '<p>Фильмы не найдены.</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка при запросе данных:', error);
+                document.getElementById('results').innerHTML = '<p>Произошла ошибка при поиске.</p>';
+            }
+        }
+
+        // Обработчик отправки формы (при нажатии Enter)
+        function handleSubmit(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузка страницы)
+            searchBooks(); // Вызываем функцию поиска
+        }
+
+        // Обработчик события ввода текста для автоматических предложений
+        document.getElementById('searchInput').addEventListener('input', function () {
+            searchBooks();
+        });
+        var dialog = document.querySelector('dialog');
+        document.querySelector('#open').onclick = function () {
+            dialog.showModal();
+        };
+        document.querySelector('#close').onclick = function () {
+            dialog.close();
+        };
+
+    </script>
 </body>
+
+</html>

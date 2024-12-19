@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, Form, HTTPException, status, Cookie, File, UploadFile
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
@@ -23,6 +23,12 @@ from pydantic import BaseModel
 from app.models import get_random_book, get_random_movie
 
 from app.models import get_horoscope_and_movies  
+from fastapi import FastAPI, Query, HTTPException
+from fastapi.responses import JSONResponse
+import pandas as pd
+
+from app.models import get_book_titles_from_csv, get_movies_titles_from_csv
+
 
 # Настройки приложения
 SECRET_KEY = "a2f6c1b3e8d9f7a2c3d4b5e6f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9g0"
@@ -368,3 +374,35 @@ def zodiac_translation(sign: str):
     return translations.get(sign.lower(), sign.capitalize())
 
 templates.env.filters["zodiac_translation"] = zodiac_translation
+
+@app.get("/get_book_titles", response_class=JSONResponse)
+async def get_book_titles(request: Request, search_query: str = ''):
+    print(f"Получен запрос с параметром search_query: {search_query}")  # Логируем запрос
+
+    file_path = 'app/learning/filtered_translated_books.csv'  # Путь к файлу
+    titles = get_book_titles_from_csv(file_path)  # Получаем все заголовки книг
+
+    # Фильтрация заголовков по запросу
+    if search_query:
+        titles = [title for title in titles if search_query.lower() in title.lower()]
+    
+    top_titles = titles[:5]  # Ограничиваем вывод 5 первыми заголовками
+
+    print(f"Найдено {len(top_titles)} книг")  # Логируем количество найденных книг
+    return JSONResponse(content={"titles": top_titles})
+
+@app.get("/get_movies_titles", response_class=JSONResponse)
+async def get_movies_titles(request: Request, search_query: str = ''):
+    print(f"Получен запрос с параметром search_query: {search_query}")  # Логируем запрос
+
+    file_path = 'app/learning/THUMBNAILS_translated_movies.csv'  # Путь к файлу
+    titles = get_movies_titles_from_csv(file_path)  # Получаем все заголовки книг
+
+    # Фильтрация заголовков по запросу
+    if search_query:
+        titles = [Title for Title in titles if search_query.lower() in Title.lower()]
+    
+    top_titles = titles[:5]  # Ограничиваем вывод 5 первыми заголовками
+
+    print(f"Найдено {len(top_titles)} фильмов")  # Логируем количество найденных книг
+    return JSONResponse(content={"titles": top_titles})
