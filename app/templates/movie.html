@@ -31,7 +31,8 @@
                 <div class="right-section">
                     <div>
                         <a href="/profile">
-                            <img class="avatar" src="{{ user.photo_path }}" alt="Avatar">
+                            <img class="avatar" src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}" alt="Avatar">
+
                         </a>
                     </div>
                 </div>
