@@ -12,34 +12,42 @@
 <body>
     <header class="header">
         <div class="container">
-            <div class="header-wrapper">
-                <div class="logo-section">
+            <div class="wrapper">
+                <div class="left-section">
                     <img src="static/images/логотип.png" class="logo" alt="Логотип">
                     <span class="brand-name">two <br> chairs</span>
                 </div>
-                <form class="search-form" id="searchForm">
-                    <input type="text" class="search-bar" id="searchInput" placeholder="Поиск книг..." aria-label="Поиск книг">
-                    <button type="submit" hidden></button>
-                </form>
+                <div class="main-section">
+                    <form class="search-form" id="searchForm">
+                        <input type="text" class="search-bar" id="searchInput" placeholder="Поиск книг..."
+                            aria-label="Поиск книг" oninput="searchBooks()">
+                        <div id="suggestions" class="suggestions"></div>
+                        <button type="submit" hidden></button>
+                    </form>
+                    <ul id="results"></ul>
+                </div>
+
+
                 <div class="profile-section">
                     <a href="/profile">
-                        <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png" alt="Аватар пользователя">
+                        <img class="avatar" src="https://cdn.ebaumsworld.com/mediaFiles/picture/1151541/84693449.png"
+                            alt="Аватар пользователя">
                     </a>
                 </div>
             </div>
         </div>
     </header>
 
-    
-    <main class="main-content">
+
+    <main class="main">
         <div class="container">
-            <div class="content-wrapper">
-                <aside class="sidebar">
+            <div class="wrapper">
+                <div class="left-section">
                     <nav class="navigation">
-                        <a class="navigation-item" href="/main">
+                        <a class="navigation-item " href="/main">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon">
+                                stroke-linejoin="round" class="lucide lucide-house">
                                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                                 <path
                                     d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -49,7 +57,7 @@
                         <a class="navigation-item active" href="/books">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon">
+                                stroke-linejoin="round" class="lucide lucide-library-big">
                                 <rect width="8" height="18" x="3" y="3" rx="1" />
                                 <path d="M7 3v18" />
                                 <path
@@ -57,10 +65,10 @@
                             </svg>
                             Книги
                         </a>
-                        <a class="navigation-item" href="/movies">
+                        <a class="navigation-item " href="/movies">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon">
+                                stroke-linejoin="round" class="lucide lucide-clapperboard">
                                 <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z" />
                                 <path d="m6.2 5.3 3.1 3.9" />
                                 <path d="m12.4 3.4 3.1 4" />
@@ -68,10 +76,10 @@
                             </svg>
                             Фильмы
                         </a>
-                        <a class="navigation-item" href="/get_horoscope">
+                        <a class="navigation-item " href="/get_horoscope">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon">
+                                stroke-linejoin="round" class="lucide lucide-sparkles">
                                 <path
                                     d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
                                 <path d="M20 3v4" />
@@ -81,10 +89,10 @@
                             </svg>
                             Гороскоп
                         </a>
-                        <a class="navigation-item" href="/random">
+                        <a class="navigation-item " href="/random">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon">
+                                stroke-linejoin="round" class="lucide lucide-clover">
                                 <path d="M16.17 7.83 2 22" />
                                 <path
                                     d="M4.02 12a2.827 2.827 0 1 1 3.81-4.17A2.827 2.827 0 1 1 12 4.02a2.827 2.827 0 1 1 4.17 3.81A2.827 2.827 0 1 1 19.98 12a2.827 2.827 0 1 1-3.81 4.17A2.827 2.827 0 1 1 12 19.98a2.827 2.827 0 1 1-4.17-3.81A1 1 0 1 1 4 12" />
@@ -93,8 +101,13 @@
                             Мне повезет
                         </a>
                     </nav>
+                </div>
+
+
+                <aside class="sidebar">
+
                 </aside>
-                <section class="content">
+                <section class="main-section">
                     <div id="bookCards" class="cards">
                         <!-- Карточки книг будут загружаться динамически -->
                     </div>
@@ -104,17 +117,17 @@
     </main>
 
     <script>
-        // Обработчик для формы поиска книг
+        // Обработчик отправки формы поиска
         document.getElementById('searchForm').addEventListener('submit', async function (event) {
-            event.preventDefault(); // Предотвращаем отправку формы
-            const searchTerm = document.getElementById('searchInput').value;
-            if (searchTerm.trim()) {
-                const books = await fetchRecommendations(searchTerm);
-                displayBooks(books);
+            event.preventDefault(); // Предотвращаем перезагрузку страницы
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm) {
+                const books = await fetchRecommendations(searchTerm); // Получение данных с сервера
+                displayBooks(books); // Отображение карточек книг
             }
         });
 
-        // Функция для получения рекомендаций книг
+        // Получение рекомендаций книг с сервера
         async function fetchRecommendations(query) {
             try {
                 const response = await fetch('/recommend_books', {
@@ -124,30 +137,30 @@
                     },
                     body: JSON.stringify({ title: query, num_recommendations: 12 })
                 });
-                const data = await response.json();
-                return data || [];
+                if (!response.ok) throw new Error(`Ошибка ${response.status}`);
+                return await response.json(); // Список книг
             } catch (error) {
                 console.error('Ошибка при получении данных:', error);
                 return [];
             }
         }
 
-        // Функция для отображения карточек книг
+        // Отображение карточек книг
         function displayBooks(books) {
             const bookCardsContainer = document.getElementById('bookCards');
-            bookCardsContainer.innerHTML = ''; // Очищаем контейнер перед добавлением новых книг
+            bookCardsContainer.innerHTML = ''; // Очистка контейнера
 
             if (books.length === 0) {
                 bookCardsContainer.innerHTML = '<p>Нет книг для отображения.</p>';
             } else {
                 books.forEach(book => {
                     const card = createBookCard(book);
-                    bookCardsContainer.appendChild(card);
+                    bookCardsContainer.appendChild(card); // Добавление карточки в контейнер
                 });
             }
         }
 
-        // Функция для создания карточки книги
+        // Создание карточки книги
         function createBookCard(book) {
             const card = document.createElement('div');
             card.classList.add('card');
@@ -157,51 +170,39 @@
             cardTop.classList.add('card__top');
             const image = document.createElement('img');
             image.classList.add('card__image');
-            image.src = book.thumbnail || 'static/images/профиль.png'; // Если изображения нет, используем дефолтное
+            image.src = book.thumbnail || 'static/images/профиль.png';
             cardTop.appendChild(image);
 
-            // Нижняя часть карточки с информацией
+            // Нижняя часть карточки с текстовой информацией
             const cardBottom = document.createElement('div');
             cardBottom.classList.add('card__bottom');
-            
-            // Название книги
+
             const title = document.createElement('span');
             title.classList.add('card_title');
             title.textContent = book.title || 'Без названия';
             cardBottom.appendChild(title);
 
-            // Автор книги
             const authors = document.createElement('p');
             authors.classList.add('card_authors');
             authors.textContent = `Автор: ${book.authors || 'Неизвестен'}`;
             cardBottom.appendChild(authors);
 
-            // Описание книги
-            const description = document.createElement('p');
-            description.classList.add('card_description');
-            description.textContent = book.description || 'Описание отсутствует';
-            cardBottom.appendChild(description);
-
-            // Рейтинг книги
             const rating = document.createElement('div');
             rating.classList.add('rating');
-            const starIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            starIcon.setAttribute("class", "rating-icon");
-            starIcon.setAttribute("width", "24");
-            starIcon.setAttribute("height", "24");
-            starIcon.setAttribute("viewBox", "0 0 24 24");
-            starIcon.setAttribute("fill", "currentColor");
-            starIcon.innerHTML = '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />';
+            const starIcon = document.createElement('span');
+            starIcon.textContent = '⭐';
             const ratingValue = document.createElement('span');
             ratingValue.textContent = book.average_rating || 'Неизвестен';
             rating.appendChild(starIcon);
             rating.appendChild(ratingValue);
             cardBottom.appendChild(rating);
 
-            // Кнопка "Подробнее"
             const button = document.createElement('button');
             button.classList.add('card_button');
             button.textContent = 'Подробнее';
+            button.addEventListener('click', () => {
+                showDialog(book); // Показать диалоговое окно с описанием книги
+            });
             cardBottom.appendChild(button);
 
             card.appendChild(cardTop);
@@ -209,7 +210,90 @@
 
             return card;
         }
+
+        // Функция для показа диалогового окна
+        function showDialog(book) {
+            // Создаем элемент <dialog>
+            const dialog = document.createElement('dialog');
+            dialog.classList.add('modal');
+
+            // Наполняем диалог контентом
+            const dialogContent = `
+
+            <p>${book.description || 'Описание отсутствует'}</p>
+            <button class="dia">Закрыть</button>
+        `;
+            dialog.innerHTML = dialogContent;
+
+            // Добавляем обработчик для закрытия окна
+            dialog.querySelector('.dia').addEventListener('click', () => {
+                dialog.close();
+                dialog.remove(); // Удаляем диалог из DOM
+            });
+
+            // Добавляем диалог в body и открываем его
+            document.body.appendChild(dialog);
+            dialog.showModal();
+        }
+
+
+        // Получение подсказок
+        // Функция для отправки запроса на сервер и получения результатов
+        async function searchBooks() {
+            const searchInput = document.getElementById('searchInput').value;
+
+            // Не делать запрос, если строка поиска слишком короткая
+            if (searchInput.length < 3) {
+                document.getElementById('results').innerHTML = '';  // Очищаем результаты
+                return;
+            }
+
+            try {
+                // Отправляем запрос на сервер
+                const response = await fetch(`/get_book_titles?search_query=${encodeURIComponent(searchInput)}`);
+
+                if (!response.ok) {
+                    throw new Error('Ошибка при получении данных с сервера');
+                }
+
+                const data = await response.json();
+                console.log('Данные, полученные с сервера:', data);  // Проверяем, что пришло от сервера
+
+                // Обновляем результаты на странице
+                const resultsContainer = document.getElementById('results');
+                resultsContainer.innerHTML = '';  // Очищаем предыдущие результаты
+
+                if (data.titles && data.titles.length > 0) {
+                    // Отображаем найденные книги
+                    data.titles.forEach(title => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = title;
+                        resultsContainer.appendChild(listItem);
+                    });
+                } else {
+                    // Если книг не найдено
+                    resultsContainer.innerHTML = '<p>Книги не найдены.</p>';
+                }
+            } catch (error) {
+                console.error('Ошибка при запросе данных:', error);
+                document.getElementById('results').innerHTML = '<p>Произошла ошибка при поиске.</p>';
+            }
+        }
+
+        // Обработчик отправки формы (при нажатии Enter)
+        function handleSubmit(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузка страницы)
+            searchBooks(); // Вызываем функцию поиска
+        }
+
+        // Обработчик события ввода текста для автоматических предложений
+        document.getElementById('searchInput').addEventListener('input', function () {
+            searchBooks();
+        });
+
     </script>
+
+
 
 </body>
 

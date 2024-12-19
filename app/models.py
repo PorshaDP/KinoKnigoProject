@@ -127,3 +127,35 @@ def get_horoscope_and_movies(sign):
         }
 
     return {"error": "Не удалось получить данные"}
+
+# Функция для получения заголовков книг из CSV
+def get_book_titles_from_csv(file_path):
+    titles = []
+    try:
+        with open(file_path, mode='r', encoding='utf-8-sig') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                title = row.get('title')
+                if title:
+                    titles.append(title)
+    except FileNotFoundError:
+        print(f"Ошибка: Файл {file_path} не найден.")
+    except Exception as e:
+        print(f"Ошибка при чтении файла CSV: {e}")
+    return titles
+
+# Функция для получения заголовков книг из CSV
+def get_movies_titles_from_csv(file_path):
+    titles = []
+    try:
+        with open(file_path, mode='r', encoding='utf-8-sig') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                title = row.get('Title')
+                if title:
+                    titles.append(title)
+    except FileNotFoundError:
+        print(f"Ошибка: Файл {file_path} не найден.")
+    except Exception as e:
+        print(f"Ошибка при чтении файла CSV: {e}")
+    return titles

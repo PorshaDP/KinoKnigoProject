@@ -2,59 +2,52 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
+  }
+  
+  html {
     font-family: 'Unageo', sans-serif;
-}
-
-body {
+  }
+  
+  body {
     background-color: #f8f7f3;
-}
-
-.header {
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  .header {
     padding-block: 12px;
     background-color: #e2e1df;
     border-bottom: 1px solid #afafaf;
-
-}
-
-.main {
+  
+  }
+  
+  .main {
     margin-top: 24px;
-}
-
-.wrapper {
+  }
+  
+  .wrapper {
     display: flex;
     gap: 24px;
-}
-
-.left-section,
-.right-section {
+  }
+  
+  .left-section,
+  .right-section {
     width: 240px;
-}
-
-.left-section {
-    display: flex;
-    margin-left: 30px;
-    color: black;
-}
-
-.left-section span {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.main-section {
+  }
+  
+  .main-section {
     flex: 1;
-}
-
-.navigation {
+  }
+  
+  .navigation {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-
-.navigation-item {
+  }
+  
+  .navigation-item {
     text-decoration: none;
     background: #fff; 
     transition: 0.5s linear; 
@@ -64,46 +57,46 @@ body {
     gap: 8px;
     color: black;
     align-items: center;
-}
-.navigation-item:hover {
+  }
+  .navigation-item:hover {
     color: #fff; 
-    background: rgb(243, 191, 68); 
-}
-
-.navigation-item.active {
+    background: rgb(243, 191, 68);
+  }
+  
+  .navigation-item.active {
     font-weight: 700;
     background-color: rgb(243, 191, 68);
-}
-
-.search-bar {
+  }
+  
+  .search-bar {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid gray;
     border-radius: 999px;
-}
-
-.container {
+  }
+  
+  .container {
     max-width: 1280px;
     margin-inline: auto;
-}
-
-.avatar {
+  }
+  
+  .avatar {
     width: 36px;
     height: 36px;
     object-fit: cover;
     border-radius: 50%;
-}
-
-.right-section {
+  }
+  
+  .right-section {
     display: flex;
     justify-content: flex-end;
-}
-
-.header .wrapper {
+  }
+  
+  .header .wrapper {
     align-items: center;
-}
-
-footer {
+  }
+  
+  footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -112,25 +105,24 @@ footer {
     padding: 10px;
     background-color: #17355c;
     color: #78b6e9;
-}
-
-.main .main-section {
+  }
+  
+  .main .main-section {
     background-color: #fff;
     border-radius: 32px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-}
-
-.cards {
+  }
+  
+  .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     width: 100%;
     column-gap: 30px;
     row-gap: 40px;
     padding: 24px;
-}
-
-.card {
-    /* width: 300px; */
+  }
+  
+  .card {
     display: flex;
     flex-direction: column;
     border-radius: 40px;
@@ -138,53 +130,85 @@ footer {
     position: relative;
     box-shadow: 6 12px 40px rgba(0, 0, 0, 0.4);
     border: 1px solid #e1e1e1;
-}
-
-.card__image {
+  }
+  
+  .card__image {
     height: 240px;
     width: 100%;
     object-fit: cover;
-}
-
-.rating-icon {
+  }
+  
+  .rating-icon {
     color: #f5ab3c;
     height: 18px;
     width: 18px;
-}
-
-.rating {
+  }
+  
+  .rating {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.card_title {
+  }
+  
+  .card_title {
     font-weight: 600;
-}
-
-.card__bottom {
+  }
+  
+  .card__bottom {
     padding: 12px 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     height: 100%;
-}
-
-.card_button {
+  }
+  
+  .card_button {
     background-color: rgb(243, 191, 68);
     border-radius: 999px;
     padding: 8px;
     border: none;
     margin-top: auto;
-    transition: background-color 0.3s ease;
-
-}
-
-.card_button:hover {
+    transition: background-color 0.3s ease ;
+    
+  }
+  .card_button:hover{
     background-color: rgb(232, 169, 24);
-}
-
-.logo {
+  }
+  .logo {
     width: 3rem;
     height: 3rem;
+  }
+  .left-section{
+    display:flex;
+    margin-left: 30px;
+    color: black;
+  }
+  .left-section span{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+
+  
+dialog {
+  width: 50%; 
+  max-width: 500px; 
+  padding: 20px; 
+  border: 2px solid #ccc; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); 
+  text-align: center; 
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  background-color: white; 
+  z-index: 1000; 
+}
+
+.dia{
+  background-color: #e2e1df;
+  border-radius: 999px;
+  padding: 8px;
+  border: none;
+  margin-top: 10px;
+  transition: background-color 0.3s ease ;
 }

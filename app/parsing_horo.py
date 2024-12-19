@@ -129,10 +129,11 @@ def get_movies_for_category(top_category):
                     if genre in genres:
                         movie_data = {
                             "title": row['Title'].strip(),
-                            "poster_url": row.get('Poster_URL', 'default_thumbnail.jpg'),  # Используем Poster_URL
+                            "alt_name": row.get('alt_name', 'default_thumbnail.jpg'),  # Используем Poster_URL
                             "description": row.get('Description', 'Описание отсутствует'),
                             "year": row.get('Year', 'Не указан'),
-                            "rating": row.get('Rating', 'Не указан')
+                            "Score": row.get('Score', 'Не указан')
+                            
                         }
                         movies.append(movie_data)
     except FileNotFoundError:
