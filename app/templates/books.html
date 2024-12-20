@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/styles/fonts.css">
+    <link rel="stylesheet" href="static/styles/style-layout.css">
     <link rel="stylesheet" href="static/styles/style-books.css">
     <title>Лента книг</title>
 </head>
@@ -28,7 +29,7 @@
                 </div>
 
 
-                <div class="profile-section">
+                <div class="right-section">
                     <a href="/profile">
                         <img class="avatar" src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}" alt="Avatar">
 
@@ -103,10 +104,6 @@
                     </nav>
                 </div>
 
-
-                <aside class="sidebar">
-
-                </aside>
                 <section class="main-section">
                     <div id="bookCards" class="cards">
                         <!-- Карточки книг будут загружаться динамически -->
