@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/styles/fonts.css">
+    <link rel="stylesheet" href="static/styles/style-layout.css">
     <link rel="stylesheet" href="static/styles/style-result.css">
     <!-- <link rel="stylesheet" href="/app/static/styles/fonts.css">
     <link rel="stylesheet" href="/app/static/styles/style-result.css"> -->
@@ -93,21 +94,21 @@
                         </a>
                     </nav>
                 </div>
-                <div class="choice">
+                <div class="main-section">
                     <div class="prediction">
                         <h1>Гороскоп для {{ sign | zodiac_translation }}</h1>
                         <p>{{ horoscope }}</p>
                         <h3>Лучшая категория: {{ top_category }} ({{ stars }} звёзд)</h3>
                     </div>
 
-                    <div class="main-section">
+                    <div>
                         <p class="obj">Фильмы</p>
                         <div class="cards">
                             {% for movie in random_movies %}
                             <div class="card">
                                 <div class="card__top">
                                     <!-- Используем alt_name для подбора изображения -->
-                                    <img src="/static/movie_posters/{{ movie.alt_name }}.jpg" class="card-img-top" alt="{{ movie.title }}">
+                                    <img class="card__image" src="/static/movie_posters/{{ movie.alt_name }}.jpg" alt="{{ movie.title }}">
                                 </div>
                                 <div class="card__bottom">
                                     <h5 class="card_title">{{ movie.title }}</h5>
