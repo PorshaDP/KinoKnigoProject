@@ -76,25 +76,19 @@ def get_random_movie():
         with open("app/learning/THUMBNAILS_translated_movies.csv", encoding="utf-8") as csvfile:
             reader = list(csv.DictReader(csvfile))
             movie = random.choice(reader)
-            #movie_title = movie.get("Title", "Не указано")
-
-
-            # Получаем alt_name для картинки
-            alt_name = movie.get("alt_name")  # Используем alt_name, если он есть, иначе transliterated_title
-
-            # Формируем путь к изображению относительно папки /static/
+ 
+            alt_name = movie.get("alt_name")  
             image_folder = "app/static/movie_posters"
-            image_filename = f"{alt_name}.jpg"  # или .png, если формат другой
+            image_filename = f"{alt_name}.jpg"  
             image_path = os.path.join(image_folder, image_filename)
 
-            # Проверяем, существует ли файл изображения
+
             if not os.path.isfile(image_path):
-                image_path = ""  # если изображения нет, возвращаем пустую строку
+                image_path = ""  
             else:
-                # Путь для использования в HTML
                 image_path = f"/static/movie_posters/{alt_name}.jpg"
 
-            # Логирование для отладки
+
             logging.debug(f"Image path: {image_path}")
 
             return {
@@ -102,7 +96,7 @@ def get_random_movie():
                 "year": movie.get("Year", "Не указано"),
                 "score": movie.get("Score", "Нет оценки"),
                 "description": movie.get("Description", "Описание отсутствует"),
-                "poster_url": image_path,  # Указываем путь к картинке
+                "poster_url": image_path,  
             }
     except FileNotFoundError:
         return {"error": "Файл с фильмами не найден"}

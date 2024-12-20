@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import sys
 
-# Убедимся, что выводим текст в консоль с правильной кодировкой
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 # Словарь для маппинга категорий на жанры
