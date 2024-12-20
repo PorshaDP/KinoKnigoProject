@@ -226,15 +226,20 @@
                 resultsContainer.innerHTML = '';  // Очищаем предыдущие результаты
 
                 if (data.titles && data.titles.length > 0) {
-                    // Отображаем найденные книги
                     data.titles.forEach(title => {
                         const listItem = document.createElement('li');
                         listItem.textContent = title;
+
+                        // Добавляем обработчик клика на подсказку
+                        listItem.addEventListener('click', () => {
+                            document.getElementById('searchInput').value = title; // Подставляем текст в поле поиска
+                            document.getElementById('results').innerHTML = ''; // Очищаем список подсказок
+                        });
+
                         resultsContainer.appendChild(listItem);
                     });
                 } else {
-                    // Если книг не найдено
-                    resultsContainer.innerHTML = '<p>Фильмы не найдены.</p>';
+                    resultsContainer.innerHTML = '<p>Книги не найдены.</p>';
                 }
             } catch (error) {
                 console.error('Ошибка при запросе данных:', error);

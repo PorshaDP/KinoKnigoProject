@@ -31,7 +31,9 @@
 
                 <div class="right-section">
                     <a href="/profile">
-                        <img class="avatar" src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}" alt="Avatar">
+                        <img class="avatar"
+                            src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}"
+                            alt="Avatar">
 
                     </a>
                 </div>
@@ -236,17 +238,16 @@
 
         // Получение подсказок
         // Функция для отправки запроса на сервер и получения результатов
+        
         async function searchBooks() {
             const searchInput = document.getElementById('searchInput').value;
 
-            // Не делать запрос, если строка поиска слишком короткая
             if (searchInput.length < 3) {
                 document.getElementById('results').innerHTML = '';  // Очищаем результаты
                 return;
             }
 
             try {
-                // Отправляем запрос на сервер
                 const response = await fetch(`/get_book_titles?search_query=${encodeURIComponent(searchInput)}`);
 
                 if (!response.ok) {
@@ -254,21 +255,25 @@
                 }
 
                 const data = await response.json();
-                console.log('Данные, полученные с сервера:', data);  // Проверяем, что пришло от сервера
+                console.log('Данные, полученные с сервера:', data);
 
-                // Обновляем результаты на странице
                 const resultsContainer = document.getElementById('results');
-                resultsContainer.innerHTML = '';  // Очищаем предыдущие результаты
+                resultsContainer.innerHTML = '';
 
                 if (data.titles && data.titles.length > 0) {
-                    // Отображаем найденные книги
                     data.titles.forEach(title => {
                         const listItem = document.createElement('li');
                         listItem.textContent = title;
+
+                        // Добавляем обработчик клика на подсказку
+                        listItem.addEventListener('click', () => {
+                            document.getElementById('searchInput').value = title; // Подставляем текст в поле поиска
+                            document.getElementById('results').innerHTML = ''; // Очищаем список подсказок
+                        });
+
                         resultsContainer.appendChild(listItem);
                     });
                 } else {
-                    // Если книг не найдено
                     resultsContainer.innerHTML = '<p>Книги не найдены.</p>';
                 }
             } catch (error) {
@@ -277,13 +282,13 @@
             }
         }
 
-        // Обработчик отправки формы (при нажатии Enter)
+        // Обработчик отправки формы
         function handleSubmit(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузка страницы)
-            searchBooks(); // Вызываем функцию поиска
+            event.preventDefault();
+            searchBooks();
         }
 
-        // Обработчик события ввода текста для автоматических предложений
+        // Обработчик события ввода текста
         document.getElementById('searchInput').addEventListener('input', function () {
             searchBooks();
         });

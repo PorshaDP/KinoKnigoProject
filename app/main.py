@@ -447,18 +447,18 @@ templates.env.filters["zodiac_translation"] = zodiac_translation
 
 @app.get("/get_book_titles", response_class=JSONResponse)
 async def get_book_titles(request: Request, search_query: str = ''):
-    print(f"Получен запрос с параметром search_query: {search_query}")  # Логируем запрос
+    print(f"Получен запрос с параметром search_query: {search_query}") 
 
-    file_path = 'app/learning/filtered_translated_books.csv'  # Путь к файлу
-    titles = get_book_titles_from_csv(file_path)  # Получаем все заголовки книг
+    file_path = 'app/learning/filtered_translated_books.csv' 
+    titles = get_book_titles_from_csv(file_path) 
 
-    # Фильтрация заголовков по запросу
+
     if search_query:
         titles = [title for title in titles if search_query.lower() in title.lower()]
     
-    top_titles = titles[:5]  # Ограничиваем вывод 5 первыми заголовками
+    top_titles = titles[:5]  
 
-    print(f"Найдено {len(top_titles)} книг")  # Логируем количество найденных книг
+    print(f"Найдено {len(top_titles)} книг")  
     return JSONResponse(content={"titles": top_titles})
 
 @app.get("/get_movies_titles", response_class=JSONResponse)
