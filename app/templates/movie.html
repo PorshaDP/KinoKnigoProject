@@ -22,7 +22,7 @@
                 <div class="main-section">
                     <form class="search-form" id="searchForm">
                         <input type="text" class="search-bar" id="searchInput" placeholder="Поиск фильмов..."
-                        aria-label="Поиск фильмов" oninput="searchBooks()">
+                            aria-label="Поиск фильмов" oninput="searchBooks()">
                         <div id="suggestions" class="suggestions"></div>
                         <button type="submit" hidden></button>
                     </form>
@@ -33,7 +33,6 @@
                     <div>
                         <a href="/profile">
                             <img class="avatar" src="{{ user.photo_path if user.photo_path else '/static/default-profile.png' }}" alt="Avatar">
-
                         </a>
                     </div>
                 </div>
@@ -51,8 +50,7 @@
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-house">
                                 <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
-                                <path
-                                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <path d="m3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                             </svg>
                             Домой
                         </a>
@@ -62,8 +60,7 @@
                                 stroke-linejoin="round" class="lucide lucide-library-big">
                                 <rect width="8" height="18" x="3" y="3" rx="1" />
                                 <path d="M7 3v18" />
-                                <path
-                                    d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z" />
+                                <path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z" />
                             </svg>
                             Книги
                         </a>
@@ -109,11 +106,22 @@
                         <!-- Карточки фильмов будут добавляться сюда с помощью JavaScript -->
                     </div>
 
+                    <!-- Место для диалогов -->
+                    <dialog id="dialog-${index}">
+                        <div class="dialog__content">
+                            <h2>${movie.Title || 'Без названия'}</h2>
+                            <p>${movie.Description || 'Описание отсутствует'}</p>
+                        </div>
+                        <div class="dialog__image-container">
+                            <img src="static/movie_posters/${movie.alt_name}.jpg" alt="${movie.Title}" />
+                        </div>
+                        <button class="dia" data-id="${index}">Закрыть</button>
+                    </dialog>
+                    
                 </div>
             </div>
         </div>
     </main>
-
     <script>
         // Функция для загрузки фильмов с сервера и отображения их на странице
         async function fetchMovies(title) {
@@ -129,21 +137,21 @@
                         num_recommendations: 12
                     })
                 });
-
+    
                 // Проверяем статус ответа
                 if (!response.ok) {
                     throw new Error('Ошибка при получении данных');
                 }
-
+    
                 // Получаем данные
                 const movies = await response.json();
-
+    
                 // Находим контейнер для карточек фильмов
                 const movieCardsContainer = document.getElementById('movie-cards');
-
+    
                 // Очищаем контейнер перед добавлением новых карточек
                 movieCardsContainer.innerHTML = '';
-
+    
                 // Перебираем все фильмы и создаем для них карточки
                 movies.forEach((movie, index) => {
                     const card = document.createElement('div');
@@ -163,100 +171,108 @@
                             </div>
                             <button class="card_button" id="open-${index}">Подробнее</button>
                             <dialog id="dialog-${index}">
-                                <p>${movie.Description}</p>
+                                <!-- Добавляем динамический контент в диалог -->
+                                <div class="dialog__content">
+                                    <h2>${movie.Title || 'Без названия'}</h2>
+                                    <p>${movie.Description || 'Описание отсутствует'}</p>
+                                </div>
+                                <div class="dialog__image-container">
+                                    <img src="static/movie_posters/${movie.alt_name}.jpg" alt="${movie.Title}" />
+                                </div>
                                 <button class="dia" data-id="${index}">Закрыть</button>
                             </dialog>
                         </div>
                     `;
-
+    
                     movieCardsContainer.appendChild(card);
-
+    
                     // Добавляем обработчик для кнопки "Подробнее"
                     document.getElementById(`open-${index}`).addEventListener('click', () => {
                         document.getElementById(`dialog-${index}`).showModal();
                     });
-
+    
                     // Добавляем обработчик для кнопки "Закрыть"
                     document.querySelector(`#dialog-${index} .dia`).addEventListener('click', () => {
                         document.getElementById(`dialog-${index}`).close();
                     });
                 });
-
+    
             } catch (error) {
                 console.error('Ошибка:', error);
             }
         }
-
+    
         // Обработчик для формы поиска
         document.getElementById('searchForm').addEventListener('submit', function (event) {
             event.preventDefault();  // Предотвращаем стандартное отправление формы
-
+    
             const searchInput = document.getElementById('searchInput');
             const query = searchInput.value.trim();
-
+    
             if (query) {
                 fetchMovies(query);  // Загружаем фильмы, соответствующие запросу
             }
         });
-
+    
         // Получение подсказок
         // Функция для отправки запроса на сервер и получения результатов
         async function searchBooks() {
             const searchInput = document.getElementById('searchInput').value;
-
+    
             // Не делать запрос, если строка поиска слишком короткая
             if (searchInput.length < 3) {
                 document.getElementById('results').innerHTML = '';  // Очищаем результаты
                 return;
             }
-
+    
             try {
                 // Отправляем запрос на сервер
                 const response = await fetch(`/get_movies_titles?search_query=${encodeURIComponent(searchInput)}`);
-
+    
                 if (!response.ok) {
                     throw new Error('Ошибка при получении данных с сервера');
                 }
-
+    
                 const data = await response.json();
                 console.log('Данные, полученные с сервера:', data);  // Проверяем, что пришло от сервера
-
+    
                 // Обновляем результаты на странице
                 const resultsContainer = document.getElementById('results');
                 resultsContainer.innerHTML = '';  // Очищаем предыдущие результаты
-
+    
                 if (data.titles && data.titles.length > 0) {
                     data.titles.forEach(title => {
                         const listItem = document.createElement('li');
                         listItem.textContent = title;
-
+    
                         // Добавляем обработчик клика на подсказку
                         listItem.addEventListener('click', () => {
                             document.getElementById('searchInput').value = title; // Подставляем текст в поле поиска
                             document.getElementById('results').innerHTML = ''; // Очищаем список подсказок
                         });
-
+    
                         resultsContainer.appendChild(listItem);
                     });
                 } else {
-                    resultsContainer.innerHTML = '<p>Книги не найдены.</p>';
+                    resultsContainer.innerHTML = '<p>Фильмы не найдены.</p>';
                 }
             } catch (error) {
                 console.error('Ошибка при запросе данных:', error);
                 document.getElementById('results').innerHTML = '<p>Произошла ошибка при поиске.</p>';
             }
         }
-
+    
         // Обработчик отправки формы (при нажатии Enter)
         function handleSubmit(event) {
             event.preventDefault(); // Предотвращаем стандартное поведение формы (перезагрузка страницы)
             searchBooks(); // Вызываем функцию поиска
         }
-
+    
         // Обработчик события ввода текста для автоматических предложений
         document.getElementById('searchInput').addEventListener('input', function () {
             searchBooks();
         });
+    
         var dialog = document.querySelector('dialog');
         document.querySelector('#open').onclick = function () {
             dialog.showModal();
@@ -264,8 +280,8 @@
         document.querySelector('#close').onclick = function () {
             dialog.close();
         };
-
     </script>
+    
 </body>
 
 </html>

@@ -90,9 +90,10 @@ footer {
   background-color: rgb(232, 169, 24);
 }
 
+/* Стили для диалогового окна */
 dialog {
-  width: 50%;
-  max-width: 500px;
+  width: 60%;           /* Увеличим ширину диалога */
+  max-width: 700px;     /* Установим максимальную ширину */
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -104,6 +105,7 @@ dialog {
   transform: translate(-50%, -50%);
   background-color: white;
   z-index: 1000;
+  overflow: hidden; /* Предотвращаем выход содержимого за пределы */
 }
 
 .dia {
@@ -113,4 +115,41 @@ dialog {
   border: none;
   margin-top: 10px;
   transition: background-color 0.3s ease;
+}
+
+/* Стили для контейнера с изображением */
+.dialog__image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Стили для изображения в диалоге */
+.dialog__image {
+  width: 100%;               /* Устанавливаем ширину изображения на 100% */
+  max-width: 600px;          /* Ограничиваем максимальную ширину */
+  max-height: 400px;         /* Ограничиваем максимальную высоту */
+  object-fit: contain;       /* Сохраняем пропорции */
+  border-radius: 8px;        /* Закругленные углы */
+  margin-bottom: 10px;
+  transition: transform 0.3s ease; /* Плавное увеличение при наведении */
+}
+
+/* Эффект увеличения при наведении на изображение */
+.dialog__image:hover {
+  transform: scale(1.1); 
+}
+
+/* Стили для кнопки */
+.dia {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #e2e1df;
+  color: white;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dia:hover {
+  background-color:rgb(232, 169, 24);
 }
