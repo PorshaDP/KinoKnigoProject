@@ -210,17 +210,29 @@
             return card;
         }
 
+
         // Функция для показа диалогового окна
         function showDialog(book) {
             // Создаем элемент <dialog>
             const dialog = document.createElement('dialog');
             dialog.classList.add('modal');
 
+            // Создаем элемент изображения книги
+            const bookImage = document.createElement('img');
+            bookImage.classList.add('dialog__image');
+            bookImage.src = book.thumbnail || 'static/images/профиль.png'; // Используем изображение книги или картинку по умолчанию
+            bookImage.alt = book.title || 'Без названия';
+
             // Наполняем диалог контентом
             const dialogContent = `
-
-            <p>${book.description || 'Описание отсутствует'}</p>
-            <button class="dia">Закрыть</button>
+                <div class="dialog__content">
+                    <h2>${book.title || 'Без названия'}</h2>
+                    <p>${book.description || 'Описание отсутствует'}</p>
+                </div>
+                <div class="dialog__image-container">
+                    ${bookImage.outerHTML}  <!-- Добавляем картинку в диалог -->
+                </div>
+                <button class="dia">Закрыть</button>
         `;
             dialog.innerHTML = dialogContent;
 
@@ -238,7 +250,7 @@
 
         // Получение подсказок
         // Функция для отправки запроса на сервер и получения результатов
-        
+
         async function searchBooks() {
             const searchInput = document.getElementById('searchInput').value;
 

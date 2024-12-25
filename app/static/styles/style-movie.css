@@ -88,13 +88,14 @@ footer {
   background-color: rgb(232, 169, 24);
 }
 
+/* Стили для диалогового окна */
 dialog {
-  width: 50% !important;
-  max-width: 500px !important;
+  width: 60% !important;       /* Увеличим ширину диалога */
+  max-width: 700px !important;    /* Установим максимальную ширину */
   padding: 20px !important;
   border: 2px solid #ccc !important;
   border-radius: 8px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   text-align: center !important;
   position: fixed !important;
   top: 50% !important;
@@ -102,35 +103,59 @@ dialog {
   transform: translate(-50%, -50%) !important;
   background-color: white !important;
   z-index: 1000 !important;
+  display: none !important;  /* Скрыт по умолчанию */
+  animation: fadeIn 0.5s ease;  /* Плавное появление диалога */
 }
-
 
 dialog[open] {
-  display: block !important;
+  display: block !important;  /* Показать, когда открыт */
 }
-
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translate(-50%, -55%);
+    opacity: 0;
+    transform: translate(-50%, -55%);
   }
   to {
-      opacity: 1;
-      transform: translate(-50%, -50%);
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 }
 
+/* Стили для изображения внутри диалога */
+.dialog__image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dialog__image {
+  width: 100%;               /* Устанавливаем ширину изображения на 100% */
+  max-width: 600px;          /* Ограничиваем максимальную ширину */
+  max-height: 400px;         /* Ограничиваем максимальную высоту */
+  object-fit: contain;       /* Сохраняем пропорции изображения */
+  border-radius: 8px;        /* Закругленные углы */
+  margin-bottom: 10px;
+  transition: transform 0.3s ease; /* Плавное увеличение при наведении */
+}
+
+/* Эффект увеличения при наведении на изображение */
+.dialog__image:hover {
+  transform: scale(1.1); /* Увеличиваем изображение на 10% */
+}
+
+/* Обновленные стили для кнопки закрытия */
 .dia {
-  background-color: #e2e1df;
-  border-radius: 999px;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+  background-color: #e2e1df; /* Цвет фона кнопки */
+  border-radius: 999px;      /* Круглая форма кнопки */
+  padding: 8px 20px;         /* Отступы */
+  border: none;              /* Без обводки */
+  margin-top: 10px;          /* Отступ сверху */
+  cursor: pointer;          /* Курсор как указатель */
+  transition: background-color 0.3s ease; /* Плавное изменение фона */
+  outline: none;             /* Убираем контур при фокусе */
+  color: white;              /* Белый цвет текста */
 }
 
 .dia:hover {
-  background-color: #d4d2d0;
+  background-color: rgb(232, 169, 24);  /* Рыжий цвет при наведении */
 }
